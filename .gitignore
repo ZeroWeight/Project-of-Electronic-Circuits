@@ -1,11 +1,18 @@
 # Prerequisites
 *.d
-
+*.log
+*.aux
+*.vscodeLog
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
+*.REPPreview
+*.PcbDocPreview
+*.LOG
+*.Zip
+*.PrjPcbStructure
 
 # Linker output
 *.ilk
