@@ -1,6 +1,6 @@
 `timescale 1us / 1us
 
-module TOP_DEMO(
+module TOP_DEMO (
     input sys_clk,
     input rst_n,
     output reg scl,
