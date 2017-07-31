@@ -51,15 +51,15 @@
 @32 80 // HREF Control
 @33 0B // Array Current Control
 @34 11 // Array Reference Control
-// /@35 00 // Reserved (Cannot Read/Write)
-// /@36 00 // Reserved (Cannot Read/Write)
+// @35 00 // Reserved (Cannot Read/Write)
+// @36 00 // Reserved (Cannot Read/Write)
 @37 1D // ADC Control
 @38 71 // ADC & Analog Common Mode Control
 @39 2A // ADC Offset Control
 @3A 04 // Line Buffer Test Option
 @3B 02 // Common Control 11
 @3C 78 // Common Control 12
-@3D C2// Common Control 13
+@3D C2 // Common Control 13
 @3E 00 // Common Control 14
 @3F 00 // Edge Enhancement Adjustment
 @40 D0 // Common Control 15
