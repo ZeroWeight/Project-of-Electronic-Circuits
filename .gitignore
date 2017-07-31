@@ -12,6 +12,7 @@
 *.PcbDocPreview
 *.LOG
 *.Zip
+*.opendb
 *.PrjPcbStructure
 *.suo
 *.pdb
