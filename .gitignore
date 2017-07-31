@@ -13,6 +13,14 @@
 *.LOG
 *.Zip
 *.PrjPcbStructure
+*.suo
+*.pdb
+*.tlog
+*.lastbuildstate
+*.filters
+*.vcxproj
+*.ilk
+*.db
 
 # Linker output
 *.ilk
