@@ -152,7 +152,7 @@ UserInterface::UserInterface (QWidget *parent)
 			ch1 = buffer->dequeue ();
 			ch2 = buffer->dequeue ();
 			R = (ch1 & 0xF8);
-			G = (ch1 << 5) + ((ch2 >> 5) << 2);
+			G = ((ch1 << 5) | (ch2 >> 3)) & 0xFc;
 			B = (ch2 << 3);
 			paint_area->ans[i][j][0] = GLubyte (R);
 			paint_area->ans[i][j][1] = GLubyte (G);
