@@ -17,6 +17,7 @@ $RECYCLE.BIN/
 *.ko
 *.obj
 *.elf
+*.gz
 *.REPPreview
 *.PcbDocPreview
 *.LOG
