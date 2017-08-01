@@ -103,14 +103,14 @@ reg write_byte_success;
 begin
     sccb_start;
     sccb_write_byte(DEVICE_ID, write_byte_success);
-    @(posedge clk_50us); @(posedge clk_50us);
+    repeat(2) @(posedge clk_50us);
     sccb_write_byte(addr, write_byte_success);
-    @(posedge clk_50us); @(posedge clk_50us);
+    repeat(2) @(posedge clk_50us);
     sccb_stop;
-    @(posedge clk_50us); @(posedge clk_50us);
+    repeat(2) @(posedge clk_50us);
     sccb_start;
     sccb_write_byte(DEVICE_ID | 1'b1, write_byte_success);
-    @(posedge clk_50us); @(posedge clk_50us);
+    repeat(2) @(posedge clk_50us);
     sccb_read_byte(data);
     sccb_nack;
     sccb_stop;
