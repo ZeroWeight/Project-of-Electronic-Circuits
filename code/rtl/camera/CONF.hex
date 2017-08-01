@@ -1,0 +1,202 @@
+@00 00 // Auto Gain Control
+@01 40 // Blue Channel Gain
+@02 40 // Red Channel Gain
+@03 06 // Vertical Frame Control
+@04 00 // Common Control 1
+@05 00 // U/B Average Level
+@06 00 // Y/Gb Average Level
+@07 00 // Exposure Value - AEC MSB 5 Bits
+@08 00 // V/R Average Level
+@09 00 // Common Control 2
+// @0A 76 // PID MSB (Read-Only)
+// @0B 73 // PID LSB (Read-Only)
+@0C 04 // Common Control 3
+@0D 00 // Common Control 4
+@0E 61 // Common Control 5
+@0F 4B // Common Control 6
+@10 00 // Exposure Value
+@11 81 // Internal Clock
+@12 14 // Common Control 7
+@13 8F // Common Control 8
+@14 28 // Common Control 9
+@15 00 // Common Control 10
+// @16 00 // Reserved (Cannot Read/Write)
+@17 16 // Output Format - Horizontal Frame Start High 8 Bits
+@18 04 // Output Format - Horizontal Frame End High 8 Bits
+@19 02 // Output Format - Vertical Frame Start High 8 Bits
+@1A 7B // Output Format - Vertical Frame End High 8 Bits
+@1B 00 // Data Format - Pixel Delay Select
+// @1C 7F // MID MSB (Read-Only)
+// @1D A2 // MID LSB (Read-Only)
+@1E 07 // Mirror/VFlip Enable
+@1F 00 // Reserved
+@20 04 // ADC Control
+@21 02 // Reserved
+@22 91 // Reserved
+@23 00 // Reserved
+@24 75 // AGC/AEC - Stable Operating Region (Upper Limit)
+@25 63 // AGC/AEC - Stable Operating Region (Lower Limit)
+@26 A5 // AGC/AEC Fast Mode Operating Region
+@27 80 // B Channel Signal Output Bias
+@28 80 // Gb Channel Signal Output Bias
+// @29 00 // Reserved (Cannot Read/Write)
+@2A 00 // Dummy Pixel Insert MSB
+@2B 00 // Dummy Pixel Insert LSB
+@2C 80 // R Channel Signal Output Bias
+@2D 00 // Dummy Lines Insert LSB
+@2E 00 // Dummy Lines Insert MSB
+@2F 00 // Y/G Channel Average Value
+@30 08 // HSYNC Rising Edge Delay Low 8 Bits
+@31 30 // HSYNC Falling Edge Delay Low 8 Bits
+@32 80 // HREF Control
+@33 0B // Array Current Control
+@34 11 // Array Reference Control
+// @35 00 // Reserved (Cannot Read/Write)
+// @36 00 // Reserved (Cannot Read/Write)
+@37 1D // ADC Control
+@38 71 // ADC & Analog Common Mode Control
+@39 2A // ADC Offset Control
+@3A 04 // Line Buffer Test Option
+@3B 02 // Common Control 11
+@3C 78 // Common Control 12
+@3D C2 // Common Control 13
+@3E 00 // Common Control 14
+@3F 00 // Edge Enhancement Adjustment
+@40 D0 // Common Control 15
+@41 08 // Common Control 16
+@42 00 // Common Control 17
+@43 14 // Reserved
+@44 F0 // Reserved
+@45 34 // Reserved
+@46 58 // Reserved
+@47 28 // Reserved
+@48 3A // Reserved
+// @49 00 // Reserved (Cannot Read/Write)
+// @4A 00 // Reserved (Cannot Read/Write)
+@4B 09 // Register 4B
+@4C 00 // Denoise Strength
+// @4D 00 // Reserved (Cannot Read/Write)
+// @4E 00 // Reserved (Cannot Read/Write)
+@4F 80 // Matrix Coefficient 1
+@50 80 // Matrix Coefficient 2
+@51 00 // Matrix Coefficient 3
+@52 22 // Matrix Coefficient 4
+@53 5E // Matrix Coefficient 5
+@54 80 // Matrix Coefficient 6
+@55 00 // Brightness Control
+@56 40 // Contrast Control
+@57 80 // Contrast Center
+@58 9E // Matrix Coefficient 5~0 Sign
+// @59 00 // AWB Control (Cannot Read/Write)
+// @5A 00 // AWB Control (Cannot Read/Write)
+// @5B 00 // AWB Control (Cannot Read/Write)
+// @5C 00 // AWB Control (Cannot Read/Write)
+// @5D 00 // AWB Control (Cannot Read/Write)
+// @5E 00 // AWB Control (Cannot Read/Write)
+// @5F 00 // AWB Control (Cannot Read/Write)
+// @60 00 // AWB Control (Cannot Read/Write)
+// @61 00 // AWB Control (Cannot Read/Write)
+@62 00 // Lens Correction Center X Coordinate
+@63 00 // Lens Correction Center Y Coordinate
+@64 04 // Compensation Coefficient
+@65 20 // No Compensation Radius
+@66 05 // Lens Correction Option
+@67 80 // Manual U Value
+@68 80 // Manual V Value
+@69 00 // Fix Gain Control
+@6A 40 // G Channel AWB Gain
+@6B 60
+@6C 0A // AWB Control 3
+@6D 55 // AWB Control 2
+@6E 11 // AWB Control 1
+@6F 9F // AWB Control 0
+@70 3A
+@71 35
+@72 11 // DCW Control
+@73 00
+@74 19 // Register 74
+@75 05 // Register 75
+@76 E1 // Register 76
+@77 01 // Register 77
+// @78 00 // Reserved (Cannot Read/Write)
+// @79 00 // Reserved (Cannot Read/Write)
+@7A 20 // Gamma Curve Highest Segment Slope
+@7B 1C // Gamma Curve 1st Segment Input End Point 04 Output Value
+@7C 28 // Gamma Curve 2nd Segment Input End Point 08 Output Value
+@7D 3C // Gamma Curve 3rd Segment Input End Point 10 Output Value
+@7E 55 // Gamma Curve 4th Segment Input End Point 20 Output Value
+@7F 68 // Gamma Curve 5th Segment Input End Point 28 Output Value
+@80 76 // Gamma Curve 6th Segment Input End Point 30 Output Value
+@81 80 // Gamma Curve 7th Segment Input End Point 38 Output Value
+@82 88 // Gamma Curve 8th Segment Input End Point 40 Output Value
+@83 8F // Gamma Curve 9th Segment Input End Point 48 Output Value
+@84 96 // Gamma Curve 10th Segment Input End Point 50 Output Value
+@85 A3 // Gamma Curve 11th Segment Input End Point 60 Output Value
+@86 AF // Gamma Curve 12th Segment Input End Point 70 Output Value
+@87 C4 // Gamma Curve 13th Segment Input End Point 90 Output Value
+@88 D7 // Gamma Curve 14th Segment Input End Point B0 Output Value
+@89 E8 // Gamma Curve 15th Segment Input End Point D0 Output Value
+// @8A 00 // Reserved (Cannot Read/Write)
+// @8B 00 // Reserved (Cannot Read/Write)
+@8C 00
+// @8D 00 // Reserved (Cannot Read/Write)
+// @8E 00 // Reserved (Cannot Read/Write)
+// @8F 00 // Reserved (Cannot Read/Write)
+// @90 00 // Reserved (Cannot Read/Write)
+// @91 00 // Reserved (Cannot Read/Write)
+@92 00 // Dummy Line Low 8 Bits
+@93 00 // Dummy Line High 8 Bits
+@94 04 // Lens Correction Option
+@95 08 // Lens Correction Option
+// @96 00 // Reserved (Cannot Read/Write)
+// @97 00 // Reserved (Cannot Read/Write)
+// @98 00 // Reserved (Cannot Read/Write)
+// @99 00 // Reserved (Cannot Read/Write)
+// @9A 00 // Reserved (Cannot Read/Write)
+// @9B 00 // Reserved (Cannot Read/Write)
+// @9C 00 // Reserved (Cannot Read/Write)
+@9D 4C // 50Hz Banding Filter Value
+@9E 3F // 60Hz Banding Filter Value
+@9F 78 // Histogram-based AEC/AGC Control 1
+@A0 68 // Histogram-based AEC/AGC Control 2
+// @A1 00 // Reserved (Cannot Read/Write)
+@A2 02 // Pixel Clock Delay
+// @A3 00 // Reserved (Cannot Read/Write)
+@A4 89
+@A5 05 // 50Hz Banding Step Limit
+@A6 DF // Histogram-based AEC/AGC Control 3
+@A7 DF // Histogram-based AEC/AGC Control 4
+@A8 F0 // Histogram-based AEC/AGC Control 5
+@A9 90 // Histogram-based AEC/AGC Control 6
+@AA 94
+@AB 07 // 60Hz Banding Step Limit
+@AC 00 // Register AC
+@AD 80 // LED Output Frame R Gain
+@AE 80 // LED Output Frame G Gain
+@AF 80 // LED Output Frame B Gain
+// @B0 00 // Reserved (Cannot Read/Write)
+@B1 0C
+// @B2 00 // Reserved (Cannot Read/Write)
+@B3 82 // ABLC Target
+// @B4 00 // Reserved (Cannot Read/Write)
+@B5 04 // ABLC Stable Range
+// @B6 00 // Reserved (Cannot Read/Write)
+// @B7 00 // Reserved (Cannot Read/Write)
+// @B8 00 // Reserved (Cannot Read/Write)
+// @B9 00 // Reserved (Cannot Read/Write)
+// @BA 00 // Reserved (Cannot Read/Write)
+// @BB 00 // Reserved (Cannot Read/Write)
+// @BC 00 // Reserved (Cannot Read/Write)
+// @BD 00 // Reserved (Cannot Read/Write)
+@BE 00 // Blue Channel Black Level Compensation
+@BF 00 // Red Channel Black Level Compensation
+@C0 00 // Gb Channel Black Level Compensation
+@C1 00 // Gr Channel Black Level Compensation
+// @C2 00 // Reserved (Cannot Read/Write)
+// @C3 00 // Reserved (Cannot Read/Write)
+// @C4 00 // Reserved (Cannot Read/Write)
+// @C5 00 // Reserved (Cannot Read/Write)
+// @C6 00 // Reserved (Cannot Read/Write)
+// @C7 00 // Reserved (Cannot Read/Write)
+// @C8 00 // Reserved (Cannot Read/Write)
+@C9 60 // Saturation Control
