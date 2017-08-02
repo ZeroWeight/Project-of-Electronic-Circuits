@@ -115,6 +115,7 @@ UserInterface::UserInterface (QWidget *parent)
 			if (currentSerialPort->open (QSerialPort::ReadWrite)) {
 				currentUartState = UartState::ON;
 				timer->start ();
+				buffer->clear ();
 				uart_on_off->setText (tr ("Turn Off"));
 			}
 			else {
