@@ -82,16 +82,16 @@ input [7:0] data;
 output reg success;
 reg write_byte_success;
 begin
-    success = 1'b1;
+    success = 1'b0;
     sccb_start;
     sccb_write_byte(DEVICE_ID, write_byte_success);
-    success = success & write_byte_success;
+    success = success | write_byte_success;
     @(posedge clk_50us); @(posedge clk_50us);
     sccb_write_byte(addr, write_byte_success);
-    success = success & write_byte_success;
+    success = success | write_byte_success;
     @(posedge clk_50us); @(posedge clk_50us);
     sccb_write_byte(data, write_byte_success);
-    success = success & write_byte_success;
+    success = success | write_byte_success;
     sccb_stop;
 end
 endtask
