@@ -4,7 +4,7 @@ module UART_TX (
     input clk,
     input rst_n,
     output reg pin,
-    input start,
+    input start, // level trigger
     output reg finish,
     input [7:0] data
 );
