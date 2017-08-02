@@ -138,7 +138,7 @@ UserInterface::UserInterface (QWidget *parent)
 	connect (buffer, &Buffer::read_out, [=] {
 		unsigned char ch1, ch2, R, G, B;
 		if (buffer->at (buffer_size - 1) - unsigned char (0x0A) || buffer->at (buffer_size - 2) - unsigned char (0x0D)) {
-			while (!buffer->isEmpty ()) {
+			while (buffer->size () >= buffer_size) {
 				if (buffer->dequeue () == 0x0A) {
 					if (!buffer->isEmpty () &&
 						buffer->at (buffer_size - 1) == unsigned char (0x0A) &&
@@ -146,7 +146,7 @@ UserInterface::UserInterface (QWidget *parent)
 						break;
 				}
 			}
-			if (buffer->isEmpty ()) return;
+			if (buffer->size () < buffer_size) return;
 		}
 		for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
 			ch1 = buffer->dequeue ();
@@ -154,10 +154,12 @@ UserInterface::UserInterface (QWidget *parent)
 			R = (ch1 & 0xF8);
 			G = ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
 			B = (ch2 << 3);
-			paint_area->ans[i][j][0] = GLubyte (R);
-			paint_area->ans[i][j][1] = GLubyte (G);
-			paint_area->ans[i][j][2] = GLubyte (B);
+			paint_area->ans[240 - i][j][0] = GLubyte (R);
+			paint_area->ans[240 - i][j][1] = GLubyte (G);
+			paint_area->ans[240 - i][j][2] = GLubyte (B);
 		}
+		buffer->dequeue ();
+		buffer->dequeue ();
 		paint_area->updateGL ();
 	});
 

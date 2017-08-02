@@ -42,7 +42,7 @@ public:
 	bool ready;
 	void enqueue (const char& t) {
 		QQueue::enqueue (unsigned char (t));
-		if (this->size () >= (153601 << 1)) {
+		if (this->size () >= (buffer_size << 1)) {
 			emit read_out ();
 		}
 	}
