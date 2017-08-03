@@ -8,9 +8,14 @@ UserInterface::UserInterface (QWidget *parent)
 	this->setFixedWidth (320 * size);
 	this->setObjectName ("MainWindow");
 	buffer = new Buffer;
+#ifdef DEBUG
+	W2F = new Write2File ();
+#endif
 	paint_area = new Painter (this);
 	paint_area->size = size;
+
 #pragma region debug_image
+#ifdef DEBUG
 	for (int i = 0; i < 240; ++i) {
 		for (int j = 0; j < 320; ++j)
 			if (i < 50 && j < 50) {
@@ -44,7 +49,9 @@ UserInterface::UserInterface (QWidget *parent)
 				paint_area->ans[i][j][2] = 255;
 			}
 	}
+#endif
 #pragma endregion
+
 	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
 	for (int i = 0; i < 6; ++i) {
 		Control_array[i] = new QPushButton (this);
@@ -53,6 +60,7 @@ UserInterface::UserInterface (QWidget *parent)
 	}
 	//SerialPort Interface
 	currentSerialPort = new QSerialPort (this);
+	currentSerialPort->setReadBufferSize (0);
 	settingCOM = new QComboBox (this);
 	settingBaudRate = new QComboBox (this);
 	uart_on_off = new QPushButton (this);
@@ -129,8 +137,9 @@ UserInterface::UserInterface (QWidget *parent)
 			QByteArray data = currentSerialPort->readAll ();
 			if (data.isEmpty ()) return;
 			else {
-				for (int i = 0; i < data.size (); ++i) {
-					buffer->enqueue (data.data ()[i]);
+				for (char ch : data) {
+					buffer->enqueue (ch);
+					W2F->enqueue (ch);
 				}
 			}
 		}
@@ -163,8 +172,7 @@ UserInterface::UserInterface (QWidget *parent)
 		buffer->dequeue ();
 		paint_area->updateGL ();
 	});
-
-	QMetaObject::invokeMethod (this, "updateGL", Qt::QueuedConnection);
+	QMetaObject::invokeMethod (paint_area, "updateGL", Qt::QueuedConnection);
 }
 
 UserInterface::~UserInterface () {
