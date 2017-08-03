@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
 	QCoreApplication a (argc, argv);
 	QSerialPort sp;
 	QTimer timer;
-	timer.setInterval (15);
+	timer.setInterval (10);
 	sp.setPortName ("COM2");
 	sp.setBaudRate (QSerialPort::Baud115200);
 	sp.setFlowControl (QSerialPort::NoFlowControl);
