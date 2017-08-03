@@ -7,9 +7,9 @@ UserInterface::UserInterface (QWidget *parent)
 	this->setFixedHeight (460 * size);
 	this->setFixedWidth (320 * size);
 	this->setObjectName ("MainWindow");
-	buffer = new Buffer;
+	buffer = new Buffer (this);
 #ifdef DEBUG
-	W2F = new Write2File ();
+	W2F = new Write2File (this);
 #endif
 	paint_area = new Painter (this);
 	paint_area->size = size;
@@ -172,9 +172,7 @@ UserInterface::UserInterface (QWidget *parent)
 		buffer->dequeue ();
 		paint_area->updateGL ();
 	});
-	QMetaObject::invokeMethod (paint_area, "updateGL", Qt::QueuedConnection);
+	//QMetaObject::invokeMethod (paint_area, "updateGL", Qt::QueuedConnection);
 }
 
-UserInterface::~UserInterface () {
-	buffer->deleteLater ();
-}
+UserInterface::~UserInterface () {}

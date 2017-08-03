@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
+#include <QList>
 #include <QThread>
 #include <QQueue>
 #include <GL/GLU.h>
@@ -42,57 +43,30 @@ class Buffer :public QObject, public QQueue<unsigned char> {
 		signals :
 	void read_out ();
 public:
-	void enqueue (const char& t) {
-		QQueue::enqueue (unsigned char (t));
-		if (this->size () >= (buffer_size << 1)) {
-			emit read_out ();
-		}
-	}
+	void enqueue (const char& t);
+	Buffer (QObject * parent = nullptr);
 };
 #ifdef DEBUG
-class Write2File :public QObject, public QQueue<unsigned char>, public QThread {
-	Q_OBJECT
+class Writer :public QQueue<unsigned char>, public QThread {
 private:
 	QFile* file;
 	QTextStream* stream;
-	QQueue<unsigned char> temp;
-	int count;
-	int s;
 protected:
-	void run ()override {
-		file->setFileName (QString::number (count++) + ".pic");
-		file->open (QIODevice::WriteOnly);
-		for (unsigned char hex : temp) {
-			(*stream) << QString ("%1").arg (hex, 2, 16, QChar ('0')) << ' ';
-		}
-		(*stream) << QString ("%1").arg (temp.size (), 10, 10, QChar ('0')) << ' ';
-		stream->flush ();
-		temp.clear ();
-		file->close ();
-	}
+	void run ()override;
 public:
-	Write2File () {
-		count = 0;
-		file = new QFile ();
-		stream = new QTextStream (file);
-	}
-	//~Write2File () {
-	//	stream->flush ();
-	//	DeleteObject (stream);
-	//	stream = nullptr;
-	//	file->deleteLater ();
-	//	file = nullptr;
-	//}
-	void enqueue (const char& t) {
-		QQueue::enqueue (unsigned char (t));
-		if (unsigned char (t) == 0x0A && this->at (this->size () - 2) == 0x0D) {
-			s = this->size ();
-			for (int i = 0; i < s; ++i)
-				temp.enqueue (this->dequeue ());
-			this->start ();
-		}
-	}
+	Writer (QObject * parent = nullptr, int index = 0);
+	~Writer ();
 };
+class Write2File :public QObject, public QQueue<unsigned char> {
+	Q_OBJECT
+private:
+	QList <Writer*> list;
+	int count;
+public:
+	Write2File (QObject * parent = nullptr);
+	void enqueue (const char& t);
+};
+
 #endif
 typedef QPushButton* Button;
 class UserInterface : public QMainWindow {

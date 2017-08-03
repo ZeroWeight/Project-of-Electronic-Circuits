@@ -254,8 +254,6 @@ void *Write2File::qt_metacast(const char *_clname)
         return static_cast<void*>(const_cast< Write2File*>(this));
     if (!strcmp(_clname, "QQueue<unsigned char>"))
         return static_cast< QQueue<unsigned char>*>(const_cast< Write2File*>(this));
-    if (!strcmp(_clname, "QThread"))
-        return static_cast< QThread*>(const_cast< Write2File*>(this));
     return QObject::qt_metacast(_clname);
 }
 
