@@ -1,6 +1,6 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
-
+#define DEBUG
 #include "ui_userinterface.h"
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -17,6 +17,10 @@
 #include <QTimer>
 #include <QSerialPortInfo>
 #include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QList>
+#include <QThread>
 #include <QQueue>
 #include <GL/GLU.h>
 #include <opencv2/opencv.hpp>
@@ -39,14 +43,31 @@ class Buffer :public QObject, public QQueue<unsigned char> {
 		signals :
 	void read_out ();
 public:
-	bool ready;
-	void enqueue (const char& t) {
-		QQueue::enqueue (unsigned char (t));
-		if (this->size () >= (buffer_size << 1)) {
-			emit read_out ();
-		}
-	}
+	void enqueue (const char& t);
+	Buffer (QObject * parent = nullptr);
 };
+#ifdef DEBUG
+class Writer :public QQueue<unsigned char>, public QThread {
+private:
+	QFile* file;
+	QTextStream* stream;
+protected:
+	void run ()override;
+public:
+	Writer (QObject * parent = nullptr, int index = 0);
+	~Writer ();
+};
+class Write2File :public QObject, public QQueue<unsigned char> {
+	Q_OBJECT
+private:
+	QList <Writer*> list;
+	int count;
+public:
+	Write2File (QObject * parent = nullptr);
+	void enqueue (const char& t);
+};
+
+#endif
 typedef QPushButton* Button;
 class UserInterface : public QMainWindow {
 	Q_OBJECT
@@ -59,7 +80,9 @@ private:
 	Painter* paint_area;
 	QSerialPort *currentSerialPort;
 	Buffer* buffer;
-
+#ifdef DEBUG
+	Write2File* W2F;
+#endif
 	Ui::UserInterfaceClass ui;
 	Button Control_array[6];
 	QComboBox* settingCOM;
