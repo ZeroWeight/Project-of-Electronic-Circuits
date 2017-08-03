@@ -48,7 +48,7 @@ module OV_INIT #(
     always @(posedge clk_100kHz or negedge rst_n)
         if (!rst_n) begin
             scl <= 1'b1; sda_out <= 1'b1; sda_oe <= 1'b1;
-            initialized <= 1'b0;
+//            initialized <= 1'b0;
             delay_cnt <= 1'd0; state <= 8'h00;
         end else if (delay_cnt) delay_cnt <= delay_cnt - 1'd1;
         else if (!initialized)
