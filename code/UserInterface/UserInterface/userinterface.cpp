@@ -168,6 +168,7 @@ UserInterface::UserInterface (QWidget *parent)
 			}
 		}
 	});*/
+	paint_area->hide ();
 }
 
 UserInterface::~UserInterface () {}
