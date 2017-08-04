@@ -3,7 +3,7 @@
 UserInterface::UserInterface (QWidget *parent)
 	: QMainWindow (parent) {
 	ui.setupUi (this);
-	int size = QApplication::desktop ()->height () / 500;
+	size = QApplication::desktop ()->height () / 500;
 	this->setFixedHeight (460 * size);
 	this->setFixedWidth (320 * size);
 	this->setObjectName ("MainWindow");
@@ -11,47 +11,8 @@ UserInterface::UserInterface (QWidget *parent)
 #ifdef DEBUG
 	W2F = new Write2File (this);
 #endif
-	paint_area = new Painter (this);
-	paint_area->size = size;
-
-#pragma region debug_image
-#ifdef DEBUG
-	for (int i = 0; i < 240; ++i) {
-		for (int j = 0; j < 320; ++j)
-			if (i < 50 && j < 50) {
-				paint_area->ans[i][j][0] = 255;
-				paint_area->ans[i][j][1] = 0;
-				paint_area->ans[i][j][2] = 0;
-			}
-			else if (i > 190 && j > 270) {
-				paint_area->ans[i][j][0] = 0;
-				paint_area->ans[i][j][1] = 255;
-				paint_area->ans[i][j][2] = 0;
-			}
-			else if (i < 50 && j>270) {
-				paint_area->ans[i][j][0] = 0;
-				paint_area->ans[i][j][1] = 0;
-				paint_area->ans[i][j][2] = 255;
-			}
-			else if (i > 190 && j < 50) {
-				paint_area->ans[i][j][0] = 255;
-				paint_area->ans[i][j][1] = 255;
-				paint_area->ans[i][j][2] = 0;
-			}
-			else if (double (i) / 240 < double (j) / 320) {
-				paint_area->ans[i][j][0] = 255;
-				paint_area->ans[i][j][1] = 0;
-				paint_area->ans[i][j][2] = 255;
-			}
-			else {
-				paint_area->ans[i][j][0] = 0;
-				paint_area->ans[i][j][1] = 255;
-				paint_area->ans[i][j][2] = 255;
-			}
-	}
-#endif
-#pragma endregion
-
+	paint_area = new QLabel ("interesting", this);
+	buffer->_size = size;
 	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
 	for (int i = 0; i < 6; ++i) {
 		Control_array[i] = new QPushButton (this);
@@ -111,41 +72,12 @@ UserInterface::UserInterface (QWidget *parent)
 			currentSerialPort->setParity (QSerialPort::NoParity);
 			if (currentSerialPort->open (QSerialPort::ReadWrite)) {
 				currentUartState = UartState::ON;
-				buffer->clear ();
 				uart_on_off->setText (tr ("Turn Off"));
 			}
 			else {
 				QMessageBox::critical (this, tr ("Error"), tr ("Fail to turn on this device!"));
 			}
 		}
-	});
-
-	connect (buffer, &Buffer::read_out, [=] {
-		unsigned char ch1, ch2, R, G, B;
-		if (buffer->at (buffer_size - 1) - unsigned char (0x0A) || buffer->at (buffer_size - 2) - unsigned char (0x0D)) {
-			while (buffer->size () >= buffer_size) {
-				if (buffer->dequeue () == 0x0A) {
-					if (!buffer->isEmpty () &&
-						buffer->at (buffer_size - 1) == unsigned char (0x0A) &&
-						buffer->at (buffer_size - 2) == unsigned char (0x0D))
-						break;
-				}
-			}
-			if (buffer->size () < buffer_size) return;
-		}
-		/*for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
-			ch1 = buffer->dequeue ();
-			ch2 = buffer->dequeue ();
-			R = (ch1 & 0xF8);
-			G = ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
-			B = (ch2 << 3);
-			paint_area->ans[240 - i][j][0] = GLubyte (R);
-			paint_area->ans[240 - i][j][1] = GLubyte (G);
-			paint_area->ans[240 - i][j][2] = GLubyte (B);
-		}*/
-		buffer->dequeue ();
-		buffer->dequeue ();
-		//paint_area->updateGL ();
 	});
 
 	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray* arr) {
@@ -158,21 +90,10 @@ UserInterface::UserInterface (QWidget *parent)
 		delete arr;
 		currentSerialPort->pause = false;
 	});
-	/*connect (this, &UserInterface::ReadyRead, [=] {
-		if (currentSerialPort->isReadable ()) {
-			QByteArray data = currentSerialPort->readAll ();
-			if (data.isEmpty ()) return;
-			else {
-				for (char ch : data) {
-					buffer->enqueue (ch);
-#ifdef DEBUG
-					W2F->enqueue (ch);
-#endif
-				}
-			}
-		}
-	});*/
-	paint_area->hide ();
+
+	connect (buffer, &Buffer::ImageUpdate, [=](const QImage& img) {
+		paint_area->setPixmap (QPixmap::fromImage (img));
+	});
 }
 
 UserInterface::~UserInterface () {}

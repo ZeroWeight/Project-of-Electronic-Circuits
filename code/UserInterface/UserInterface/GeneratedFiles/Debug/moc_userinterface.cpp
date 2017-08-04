@@ -18,77 +18,9 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_Painter_t {
-    QByteArrayData data[1];
-    char stringdata0[8];
-};
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Painter_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
-static const qt_meta_stringdata_Painter_t qt_meta_stringdata_Painter = {
-    {
-QT_MOC_LITERAL(0, 0, 7) // "Painter"
-
-    },
-    "Painter"
-};
-#undef QT_MOC_LITERAL
-
-static const uint qt_meta_data_Painter[] = {
-
- // content:
-       7,       // revision
-       0,       // classname
-       0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
-       0,    0, // enums/sets
-       0,    0, // constructors
-       0,       // flags
-       0,       // signalCount
-
-       0        // eod
-};
-
-void Painter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
-{
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
-}
-
-const QMetaObject Painter::staticMetaObject = {
-    { &QGLWidget::staticMetaObject, qt_meta_stringdata_Painter.data,
-      qt_meta_data_Painter,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
-
-
-const QMetaObject *Painter::metaObject() const
-{
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
-}
-
-void *Painter::qt_metacast(const char *_clname)
-{
-    if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_Painter.stringdata0))
-        return static_cast<void*>(const_cast< Painter*>(this));
-    return QGLWidget::qt_metacast(_clname);
-}
-
-int Painter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
-{
-    _id = QGLWidget::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
-    return _id;
-}
 struct qt_meta_stringdata_Buffer_t {
     QByteArrayData data[3];
-    char stringdata0[17];
+    char stringdata0[20];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -98,11 +30,11 @@ struct qt_meta_stringdata_Buffer_t {
 static const qt_meta_stringdata_Buffer_t qt_meta_stringdata_Buffer = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Buffer"
-QT_MOC_LITERAL(1, 7, 8), // "read_out"
-QT_MOC_LITERAL(2, 16, 0) // ""
+QT_MOC_LITERAL(1, 7, 11), // "ImageUpdate"
+QT_MOC_LITERAL(2, 19, 0) // ""
 
     },
-    "Buffer\0read_out\0"
+    "Buffer\0ImageUpdate\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -120,10 +52,10 @@ static const uint qt_meta_data_Buffer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x06 /* Public */,
+       1,    1,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QImage,    2,
 
        0        // eod
 };
@@ -134,21 +66,20 @@ void Buffer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Buffer *_t = static_cast<Buffer *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->read_out(); break;
+        case 0: _t->ImageUpdate((*reinterpret_cast< const QImage(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (Buffer::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Buffer::read_out)) {
+            typedef void (Buffer::*_t)(const QImage & );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Buffer::ImageUpdate)) {
                 *result = 0;
                 return;
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject Buffer::staticMetaObject = {
@@ -167,8 +98,8 @@ void *Buffer::qt_metacast(const char *_clname)
     if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_Buffer.stringdata0))
         return static_cast<void*>(const_cast< Buffer*>(this));
-    if (!strcmp(_clname, "QQueue<unsigned char>"))
-        return static_cast< QQueue<unsigned char>*>(const_cast< Buffer*>(this));
+    if (!strcmp(_clname, "QThread"))
+        return static_cast< QThread*>(const_cast< Buffer*>(this));
     return QObject::qt_metacast(_clname);
 }
 
@@ -190,9 +121,10 @@ int Buffer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Buffer::read_out()
+void Buffer::ImageUpdate(const QImage & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 struct qt_meta_stringdata_SerialPort_t {
     QByteArrayData data[4];
