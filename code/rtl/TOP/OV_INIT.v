@@ -270,7 +270,8 @@ module OV_INIT #(
         8'hA7: begin new_data <= 1'b1; data <= 8'h0D; state <= 8'hA8; end // TX: 0D
         8'hA8: begin new_data <= 1'b0; delay_cnt <= cnt_50us; state <= 8'hA9; end
         8'hA9: begin new_data <= 1'b1; data <= 8'h0A; state <= 8'hAA; end // TX: 0A
-        8'hAA: begin new_data <= 1'b0; initialized <= 1'b1; end
+        8'hAA: begin new_data <= 1'b0; delay_cnt <= cnt_50ms; state <= 8'hAB; end
+        8'hAB: initialized <= 1'b1;
         
         default: state <= 8'h00;
         endcase
