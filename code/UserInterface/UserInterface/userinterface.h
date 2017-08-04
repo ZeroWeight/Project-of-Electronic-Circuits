@@ -76,12 +76,13 @@ protected:
 	void run ()override;
 public:
 	bool running;
+	bool pause;
 	SerialPort (QObject * parent = nullptr);
 	~SerialPort ();
 	void close ()override;
 	bool open (OpenMode mode)override;
 signals:
-	void char_read (const char&);
+	void char_read (QByteArray*);
 };
 typedef QPushButton* Button;
 class UserInterface : public QMainWindow {
