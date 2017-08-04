@@ -26,7 +26,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
-const int BaudRate = 1152000;
+const int BaudRate = 1382400;
 class Painter :public QGLWidget {
 	Q_OBJECT
 public:
@@ -58,13 +58,13 @@ public:
 	Writer (QObject * parent = nullptr, int index = 0);
 	~Writer ();
 };
-class Write2File :public QObject, public QQueue<unsigned char> {
-	Q_OBJECT
+class Write2File :public QObject {
 private:
 	QList <Writer*> list;
 	int count;
 public:
 	Write2File (QObject * parent = nullptr);
+	~Write2File ();
 	void enqueue (const char& t);
 };
 
