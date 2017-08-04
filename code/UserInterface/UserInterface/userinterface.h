@@ -26,6 +26,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
+const int BaudRate = 1152000;
 class Painter :public QGLWidget {
 	Q_OBJECT
 public:
@@ -86,7 +87,6 @@ private:
 	Ui::UserInterfaceClass ui;
 	Button Control_array[6];
 	QComboBox* settingCOM;
-	QComboBox* settingBaudRate;
 	QPushButton* uart_on_off;
 	QTimer* timer;
 };
