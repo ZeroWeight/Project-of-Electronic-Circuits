@@ -57,8 +57,9 @@ SerialPort::~SerialPort () {
 void SerialPort::run () {
 	char c;
 	while (running) {
-		if (this->getChar (&c) && c) {
+		if (this->isReadable () && this->getChar (&c)) {
 			emit this->char_read (c);
+			for (int i = 0; i < 10000; ++i);
 		}
 	}
 }
