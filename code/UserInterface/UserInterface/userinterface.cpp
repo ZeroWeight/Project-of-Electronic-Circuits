@@ -139,7 +139,9 @@ UserInterface::UserInterface (QWidget *parent)
 			else {
 				for (char ch : data) {
 					buffer->enqueue (ch);
+#ifdef DEBUG
 					W2F->enqueue (ch);
+#endif
 				}
 			}
 		}
