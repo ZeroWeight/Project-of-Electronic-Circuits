@@ -148,11 +148,15 @@ UserInterface::UserInterface (QWidget *parent)
 		//paint_area->updateGL ();
 	});
 
-	connect (currentSerialPort, &SerialPort::char_read, [=](const char & ch) {
-		buffer->enqueue (ch);
+	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray* arr) {
+		for (char ch : (*arr)) {
+			buffer->enqueue (ch);
 #ifdef DEBUG
-		W2F->enqueue (ch);
+			W2F->enqueue (ch);
 #endif
+		}
+		delete arr;
+		currentSerialPort->pause = false;
 	});
 	/*connect (this, &UserInterface::ReadyRead, [=] {
 		if (currentSerialPort->isReadable ()) {

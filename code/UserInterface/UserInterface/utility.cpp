@@ -55,11 +55,12 @@ SerialPort::~SerialPort () {
 }
 
 void SerialPort::run () {
-	char c;
 	while (running) {
-		if (this->isReadable () && this->getChar (&c)) {
-			emit this->char_read (c);
-			for (int i = 0; i < 10000; ++i);
+		if (this->isReadable ()) {
+			QByteArray* ptr = new QByteArray (this->read (1));
+			pause = true;
+			emit this->char_read (ptr);
+			while (pause);
 		}
 	}
 }

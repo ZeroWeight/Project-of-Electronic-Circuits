@@ -265,8 +265,8 @@ int Write2File::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 struct qt_meta_stringdata_SerialPort_t {
-    QByteArrayData data[3];
-    char stringdata0[22];
+    QByteArrayData data[4];
+    char stringdata0[34];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -277,10 +277,11 @@ static const qt_meta_stringdata_SerialPort_t qt_meta_stringdata_SerialPort = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "SerialPort"
 QT_MOC_LITERAL(1, 11, 9), // "char_read"
-QT_MOC_LITERAL(2, 21, 0) // ""
+QT_MOC_LITERAL(2, 21, 0), // ""
+QT_MOC_LITERAL(3, 22, 11) // "QByteArray*"
 
     },
-    "SerialPort\0char_read\0"
+    "SerialPort\0char_read\0\0QByteArray*"
 };
 #undef QT_MOC_LITERAL
 
@@ -301,7 +302,7 @@ static const uint qt_meta_data_SerialPort[] = {
        1,    1,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Char,    2,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -312,14 +313,14 @@ void SerialPort::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         SerialPort *_t = static_cast<SerialPort *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->char_read((*reinterpret_cast< const char(*)>(_a[1]))); break;
+        case 0: _t->char_read((*reinterpret_cast< QByteArray*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (SerialPort::*_t)(const char & );
+            typedef void (SerialPort::*_t)(QByteArray * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SerialPort::char_read)) {
                 *result = 0;
                 return;
@@ -369,7 +370,7 @@ int SerialPort::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void SerialPort::char_read(const char & _t1)
+void SerialPort::char_read(QByteArray * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
