@@ -59,7 +59,7 @@ UserInterface::UserInterface (QWidget *parent)
 		Control_array[i]->setObjectName (QString ("button_") + QString::number (i));
 	}
 	//SerialPort Interface
-	currentSerialPort = new QSerialPort (this);
+	currentSerialPort = new SerialPort (this);
 	currentSerialPort->setReadBufferSize (0);
 	settingCOM = new QComboBox (this);
 	uart_on_off = new QPushButton (this);
@@ -75,8 +75,6 @@ UserInterface::UserInterface (QWidget *parent)
 		settingCOM->addItem (info.portName () + ": " + info.description ());
 	settingCOM->setCurrentIndex (0);
 	settingCOM->setToolTip (settingCOM->currentText ());
-	timer = new QTimer (this);
-	timer->setInterval (0);
 
 	currentUartState = UartState::OFF;
 	connect (currentSerialPort, static_cast<void(QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error),
@@ -102,7 +100,6 @@ UserInterface::UserInterface (QWidget *parent)
 		if (currentUartState == UartState::ON) {
 			currentSerialPort->close ();
 			currentUartState = UartState::OFF;
-			timer->stop ();
 			uart_on_off->setText (tr ("Turn On"));
 		}
 		else {
@@ -112,30 +109,13 @@ UserInterface::UserInterface (QWidget *parent)
 			currentSerialPort->setDataBits (static_cast<QSerialPort::DataBits>(8));
 			currentSerialPort->setStopBits (QSerialPort::OneStop);
 			currentSerialPort->setParity (QSerialPort::NoParity);
-
 			if (currentSerialPort->open (QSerialPort::ReadWrite)) {
 				currentUartState = UartState::ON;
-				timer->start ();
 				buffer->clear ();
 				uart_on_off->setText (tr ("Turn Off"));
 			}
 			else {
 				QMessageBox::critical (this, tr ("Error"), tr ("Fail to turn on this device!"));
-			}
-		}
-	});
-
-	connect (timer, &QTimer::timeout, [=] {
-		if (currentSerialPort->isReadable ()) {
-			QByteArray data = currentSerialPort->readAll ();
-			if (data.isEmpty ()) return;
-			else {
-				for (char ch : data) {
-					buffer->enqueue (ch);
-#ifdef DEBUG
-					W2F->enqueue (ch);
-#endif
-				}
 			}
 		}
 	});
@@ -167,7 +147,27 @@ UserInterface::UserInterface (QWidget *parent)
 		buffer->dequeue ();
 		//paint_area->updateGL ();
 	});
-	//QMetaObject::invokeMethod (paint_area, "updateGL", Qt::QueuedConnection);
+
+	connect (currentSerialPort, &SerialPort::char_read, [=](const char & ch) {
+		buffer->enqueue (ch);
+#ifdef DEBUG
+		W2F->enqueue (ch);
+#endif
+	});
+	/*connect (this, &UserInterface::ReadyRead, [=] {
+		if (currentSerialPort->isReadable ()) {
+			QByteArray data = currentSerialPort->readAll ();
+			if (data.isEmpty ()) return;
+			else {
+				for (char ch : data) {
+					buffer->enqueue (ch);
+#ifdef DEBUG
+					W2F->enqueue (ch);
+#endif
+				}
+			}
+		}
+	});*/
 }
 
 UserInterface::~UserInterface () {}

@@ -44,3 +44,36 @@ void Buffer::enqueue (const char& t) {
 }
 
 Buffer::Buffer (QObject * parent) :QObject (parent) {}
+
+SerialPort::SerialPort (QObject* parent) : QObject (parent) {
+	running = false;
+}
+
+SerialPort::~SerialPort () {
+	running = false;
+	while (this->isRunning ());
+}
+
+void SerialPort::run () {
+	char c;
+	while (running) {
+		if (this->getChar (&c) && c) {
+			emit this->char_read (c);
+		}
+	}
+}
+
+void SerialPort::close () {
+	running = false;
+	while (this->isRunning ());
+	QSerialPort::close ();
+}
+
+bool SerialPort::open (OpenMode mode) {
+	if (QSerialPort::open (mode)) {
+		this->start ();
+		running = true;
+		return true;
+	}
+	else return false;
+}
