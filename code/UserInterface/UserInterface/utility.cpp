@@ -1,19 +1,27 @@
 #include "userinterface.h"
 #ifdef DEBUG
 void Write2File::enqueue (const char& t) {
-	QQueue::enqueue (unsigned char (t));
-	if (unsigned char (t) == 0x0A && this->at (this->size () - 2) == 0x0D) {
+	list.last ()->enqueue (t);
+	if (t == 0x0A && list.last ()->at (list.last ()->size () - 2) == 0x0D) {
+		list.last ()->start ();
 		Writer* ptr = new Writer (this, count++);
-		while (!this->isEmpty ()) {
-			ptr->enqueue (this->dequeue ());
-		}
 		list.append (ptr);
-		ptr->start ();
 	}
 }
 Write2File::Write2File (QObject * parent) :QObject (parent) {
 	count = 0;
 	list.clear ();
+	Writer* ptr = new Writer (this, count++);
+	list.append (ptr);
+}
+Write2File::~Write2File () {
+	bool running = true;
+	while (running) {
+		running = false;
+		for (Writer* w : list) {
+			if (w->isRunning ()) running = true;
+		}
+	}
 }
 Writer::Writer (QObject* parent, int index) : QThread (parent) {
 	file = new QFile (this);

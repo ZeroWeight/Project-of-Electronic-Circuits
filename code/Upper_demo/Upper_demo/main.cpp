@@ -13,7 +13,7 @@ int main (int argc, char *argv[]) {
 	QTimer timer;
 	timer.setInterval (1);
 	sp.setPortName ("COM2");
-	sp.setBaudRate (1152000);
+	sp.setBaudRate (1382400);
 	sp.setFlowControl (QSerialPort::NoFlowControl);
 	sp.setDataBits (static_cast<QSerialPort::DataBits>(8));
 	sp.setStopBits (QSerialPort::OneStop);
