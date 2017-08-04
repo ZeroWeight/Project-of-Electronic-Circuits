@@ -62,13 +62,10 @@ UserInterface::UserInterface (QWidget *parent)
 	currentSerialPort = new QSerialPort (this);
 	currentSerialPort->setReadBufferSize (0);
 	settingCOM = new QComboBox (this);
-	settingBaudRate = new QComboBox (this);
 	uart_on_off = new QPushButton (this);
 
 	settingCOM->setObjectName ("settingCOM");
-	settingCOM->setGeometry (20 * size, 390 * size, 200 * size, 20 * size);
-	settingBaudRate->setObjectName ("settingBaudRate");
-	settingBaudRate->setGeometry (240 * size, 390 * size, 60 * size, 20 * size);
+	settingCOM->setGeometry (20 * size, 390 * size, 280 * size, 20 * size);
 	uart_on_off->setObjectName ("on_off");
 	uart_on_off->setGeometry (20 * size, 430 * size, 280 * size, 20 * size);
 	uart_on_off->setText (tr ("Turn On"));
@@ -78,10 +75,6 @@ UserInterface::UserInterface (QWidget *parent)
 		settingCOM->addItem (info.portName () + ": " + info.description ());
 	settingCOM->setCurrentIndex (0);
 	settingCOM->setToolTip (settingCOM->currentText ());
-	settingBaudRate->clear ();
-	foreach (auto const &baudRate, QSerialPortInfo::standardBaudRates ())
-		settingBaudRate->addItem (QString::number (baudRate));
-	settingBaudRate->setCurrentText ("115200");
 	timer = new QTimer (this);
 	timer->setInterval (0);
 
@@ -114,7 +107,7 @@ UserInterface::UserInterface (QWidget *parent)
 		}
 		else {
 			currentSerialPort->setPortName (settingCOM->currentText ().split (':').at (0));
-			currentSerialPort->setBaudRate (settingBaudRate->currentText ().toInt ());
+			currentSerialPort->setBaudRate (BaudRate);
 			currentSerialPort->setFlowControl (QSerialPort::NoFlowControl);
 			currentSerialPort->setDataBits (static_cast<QSerialPort::DataBits>(8));
 			currentSerialPort->setStopBits (QSerialPort::OneStop);
@@ -160,7 +153,7 @@ UserInterface::UserInterface (QWidget *parent)
 			}
 			if (buffer->size () < buffer_size) return;
 		}
-		for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
+		/*for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
 			ch1 = buffer->dequeue ();
 			ch2 = buffer->dequeue ();
 			R = (ch1 & 0xF8);
@@ -169,10 +162,10 @@ UserInterface::UserInterface (QWidget *parent)
 			paint_area->ans[240 - i][j][0] = GLubyte (R);
 			paint_area->ans[240 - i][j][1] = GLubyte (G);
 			paint_area->ans[240 - i][j][2] = GLubyte (B);
-		}
+		}*/
 		buffer->dequeue ();
 		buffer->dequeue ();
-		paint_area->updateGL ();
+		//paint_area->updateGL ();
 	});
 	//QMetaObject::invokeMethod (paint_area, "updateGL", Qt::QueuedConnection);
 }
