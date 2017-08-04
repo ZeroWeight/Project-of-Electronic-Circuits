@@ -69,6 +69,20 @@ public:
 };
 
 #endif
+
+class SerialPort :public QThread, public QSerialPort, public QObject {
+	Q_OBJECT
+protected:
+	void run ()override;
+public:
+	bool running;
+	SerialPort (QObject * parent = nullptr);
+	~SerialPort ();
+	void close ()override;
+	bool open (OpenMode mode)override;
+signals:
+	void char_read (const char&);
+};
 typedef QPushButton* Button;
 class UserInterface : public QMainWindow {
 	Q_OBJECT
@@ -79,7 +93,7 @@ public:
 private:
 	enum class UartState { ON, OFF } currentUartState;
 	Painter* paint_area;
-	QSerialPort *currentSerialPort;
+	SerialPort *currentSerialPort;
 	Buffer* buffer;
 #ifdef DEBUG
 	Write2File* W2F;
@@ -88,7 +102,8 @@ private:
 	Button Control_array[6];
 	QComboBox* settingCOM;
 	QPushButton* uart_on_off;
-	QTimer* timer;
+signals:
+	void ReadyRead ();
 };
 
 #endif // USERINTERFACE_H
