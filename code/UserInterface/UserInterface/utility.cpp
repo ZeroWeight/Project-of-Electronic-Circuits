@@ -5,7 +5,7 @@ void Write2File::enqueue (const char& t) {
 	list.last ()->enqueue (t);
 	if (t == 0x0A && list.last ()->at (list.last ()->size () - 2) == 0x0D) {
 		list.last ()->start ();
-		Writer* ptr = new Writer (this, count++);
+		Writer* ptr = new Writer (this, count++, _size);
 		connect (ptr, &Writer::Image, [=](const QImage& img) {
 			emit all_update (img);
 		});
@@ -49,7 +49,13 @@ void Writer::run () {
 			ans[i][j][1] = unsigned char ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
 			ans[i][j][2] = unsigned char (ch2 << 3);
 		}
-		img = QImage ((const unsigned char*)(ans), 320, 240, QImage::Format_RGB888);
+		mat_ori = cv::Mat (240, 320, CV_8UC3, ans);
+		mat_des = cv::Mat (240 * _size, 320 * _size, CV_8UC3);
+		qDebug () << _size;
+		cv::imshow ("", mat_des);
+		cv::waitKey (0);
+		const uchar *pSrc = (const uchar*)mat_des.data;
+		img = QImage (pSrc, mat_des.cols, mat_des.rows, /*mat_des.step, */QImage::Format_RGB888);
 		emit Image (img);
 	}
 	for (unsigned char hex : *this) {

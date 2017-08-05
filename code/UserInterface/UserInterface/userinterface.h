@@ -24,6 +24,8 @@
 #include <qdebug.h>
 #include <QWidget>
 #include <QQueue>
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
 const int BaudRate = 1382400;
 typedef QQueue<unsigned char> * Q;
@@ -41,6 +43,7 @@ class Writer :public QObject, public QQueue<unsigned char>, public QThread {
 		signals :
 	void Image (const QImage&);
 private:
+	cv::Mat mat_ori, mat_des;
 	QImage img;
 	int _size;
 	unsigned char ans[240][320][3] = { 0 };
