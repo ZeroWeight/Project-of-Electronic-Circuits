@@ -89,7 +89,7 @@ UserInterface::UserInterface (QWidget *parent)
 	});
 
 	connect (W2F, &Write2File::all_update, [=](const QImage&img) {
-		qDebug () << "success";
+		qDebug () << "Success";
 		paint_area->img = img;
 		paint_area->update ();
 	});
