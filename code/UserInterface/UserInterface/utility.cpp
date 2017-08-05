@@ -1,7 +1,5 @@
 #include "userinterface.h"
-
-#ifdef DEBUG
-void Write2File::enqueue (const char& t) {
+void Bus::enqueue (const char& t) {
 	list.last ()->enqueue (t);
 	if (t == 0x0A && list.last ()->at (list.last ()->size () - 2) == 0x0D) {
 		list.last ()->start ();
@@ -12,7 +10,7 @@ void Write2File::enqueue (const char& t) {
 		list.append (ptr);
 	}
 }
-Write2File::Write2File (QObject * parent, int size) :QObject (parent) {
+Bus::Bus (QObject * parent, int size) :QObject (parent) {
 	_size = size;
 	count = 0;
 	list.clear ();
@@ -22,7 +20,7 @@ Write2File::Write2File (QObject * parent, int size) :QObject (parent) {
 	});
 	list.append (ptr);
 }
-Write2File::~Write2File () {
+Bus::~Bus () {
 	bool running = true;
 	while (running) {
 		running = false;
@@ -49,7 +47,7 @@ void Writer::run () {
 			ans[i][j][1] = unsigned char ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
 			ans[i][j][2] = unsigned char (ch2 << 3);
 		}
-		img = QImage ((const uchar*)ans, 320, 240, /*mat_des.step, */QImage::Format_RGB888);
+		img = QImage ((const uchar*)ans, 320, 240, QImage::Format_RGB888);
 		emit Image (img);
 	}
 	for (unsigned char hex : *this) {
@@ -61,10 +59,10 @@ void Writer::run () {
 }
 
 Writer::~Writer () {
+	while (this->isRunning ());
 	delete stream;
 	stream = nullptr;
 }
-#endif
 SerialPort::SerialPort (QObject* parent) : QObject (parent) {
 	running = false;
 }
@@ -81,6 +79,9 @@ void SerialPort::run () {
 			emit this->char_read (this->read (1));
 			while (pause);
 		}
+		//NOTICE: if the host breakdown, try to uncommand this and enlarge the value of n
+		//if the value of n is larger than 10,000, there would be a bug
+		//for (int i = 0; i < 200/*n*/; i++);
 	}
 }
 
@@ -100,7 +101,6 @@ bool SerialPort::open (OpenMode mode) {
 }
 
 void Painter::paintEvent (QPaintEvent *) {
-	qDebug () << "Update";
 	QPainter p (this);
 	p.drawImage (this->rect (), this->img);
 }

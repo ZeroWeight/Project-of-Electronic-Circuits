@@ -7,9 +7,7 @@ UserInterface::UserInterface (QWidget *parent)
 	this->setFixedHeight (460 * size);
 	this->setFixedWidth (320 * size);
 	this->setObjectName ("MainWindow");
-#ifdef DEBUG
-	W2F = new Write2File (this, size);
-#endif
+	W2F = new Bus (this, size);
 	paint_area = new Painter (this);
 	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
 	paint_area->show ();
@@ -81,15 +79,12 @@ UserInterface::UserInterface (QWidget *parent)
 
 	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray arr) {
 		for (char ch : arr) {
-#ifdef DEBUG
 			W2F->enqueue (ch);
-#endif
 		}
 		currentSerialPort->pause = false;
 	});
 
-	connect (W2F, &Write2File::all_update, [=](const QImage&img) {
-		qDebug () << "Success";
+	connect (W2F, &Bus::all_update, [=](const QImage&img) {
 		paint_area->img = img;
 		paint_area->update ();
 	});

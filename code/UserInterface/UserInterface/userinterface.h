@@ -1,32 +1,32 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
-#define DEBUG
 #include "ui_userinterface.h"
-#include <QPushButton>
+
+#include <QApplication>
+#include <QComboBox>
+#include <QDebug>
 #include <QDesktopWidget>
 #include <QFile>
-#include <QObject>
-#include <QMainWindow>
-#include <QToolTip>
-#include <QApplication>
-#include <QPushButton>
-#include <QComboBox>
-#include <QSerialPort>
-#include <QTimer>
-#include <QLabel>
-#include <QSerialPortInfo>
-#include <QMessageBox>
-#include <QTextStream>
-#include <QPainter>
-#include <QList>
-#include <QThread>
 #include <QImage>
-#include <qdebug.h>
-#include <QWidget>
+#include <QList>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QObject>
+#include <QPainter>
+#include <QPushButton>
 #include <QQueue>
+#include <QSerialPort>
+#include <QSerialPortInfo>
+#include <QToolTip>
+#include <QTextStream>
+#include <QThread>
+#include <QWidget>
+
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
 const int BaudRate = 1382400;
 typedef QQueue<unsigned char> * Q;
+typedef QPushButton* Button;
+
 class Painter :public QWidget {
 	Q_OBJECT
 public:
@@ -35,8 +35,7 @@ public:
 	public slots:
 	void paintEvent (QPaintEvent *event)override;
 };
-#ifdef DEBUG
-class Writer :public QObject, public QQueue<unsigned char>, public QThread {
+class Writer :public QThread, public QQueue<unsigned char> {
 	Q_OBJECT
 		signals :
 	void Image (const QImage&);
@@ -52,7 +51,7 @@ public:
 	Writer (QObject * parent = nullptr, int index = 0, int size = 1);
 	~Writer ();
 };
-class Write2File :public QObject {
+class Bus :public QObject {
 	Q_OBJECT
 		signals :
 	void all_update (const QImage&);
@@ -61,13 +60,10 @@ private:
 	int count;
 	int _size;
 public:
-	Write2File (QObject * parent = nullptr, int size = 1);
-	~Write2File ();
+	Bus (QObject * parent = nullptr, int size = 1);
+	~Bus ();
 	void enqueue (const char& t);
 };
-
-#endif
-
 class SerialPort :public QThread, public QSerialPort, public QObject {
 	Q_OBJECT
 protected:
@@ -82,7 +78,6 @@ public:
 signals:
 	void char_read (QByteArray);
 };
-typedef QPushButton* Button;
 class UserInterface : public QMainWindow {
 	Q_OBJECT
 
@@ -94,9 +89,7 @@ private:
 	enum class UartState { ON, OFF } currentUartState;
 	Painter* paint_area;
 	SerialPort *currentSerialPort;
-#ifdef DEBUG
-	Write2File* W2F;
-#endif
+	Bus* W2F;
 	Ui::UserInterfaceClass ui;
 	Button Control_array[6];
 	QComboBox* settingCOM;
