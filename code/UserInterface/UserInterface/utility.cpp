@@ -43,19 +43,13 @@ Writer::Writer (QObject* parent, int index, int size) : QThread (parent) {
 void Writer::run () {
 	if (this->size () == buffer_size) {
 		for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
-			unsigned ch1 = this->at (i * 320 + j);
-			unsigned ch2 = this->at (i * 320 + j + 1);
+			unsigned ch1 = this->dequeue ();
+			unsigned ch2 = this->dequeue ();
 			ans[i][j][0] = unsigned char (ch1 & 0xF8);
 			ans[i][j][1] = unsigned char ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
 			ans[i][j][2] = unsigned char (ch2 << 3);
 		}
-		mat_ori = cv::Mat (240, 320, CV_8UC3, ans);
-		mat_des = cv::Mat (240 * _size, 320 * _size, CV_8UC3);
-		qDebug () << _size;
-		cv::imshow ("", mat_des);
-		cv::waitKey (0);
-		const uchar *pSrc = (const uchar*)mat_des.data;
-		img = QImage (pSrc, mat_des.cols, mat_des.rows, /*mat_des.step, */QImage::Format_RGB888);
+		img = QImage ((const uchar*)ans, 320, 240, /*mat_des.step, */QImage::Format_RGB888);
 		emit Image (img);
 	}
 	for (unsigned char hex : *this) {
