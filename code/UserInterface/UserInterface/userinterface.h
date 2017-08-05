@@ -2,67 +2,66 @@
 #define USERINTERFACE_H
 #define DEBUG
 #include "ui_userinterface.h"
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QPushButton>
-#include <QGLWidget>
+#include <QPushButton>
 #include <QDesktopWidget>
 #include <QFile>
 #include <QObject>
+#include <QMainWindow>
 #include <QToolTip>
 #include <QApplication>
 #include <QPushButton>
 #include <QComboBox>
-#include <QGL>
 #include <QSerialPort>
 #include <QTimer>
 #include <QLabel>
 #include <QSerialPortInfo>
 #include <QMessageBox>
-#include <QFile>
 #include <QTextStream>
+#include <QPainter>
 #include <QList>
 #include <QThread>
 #include <QImage>
+#include <qdebug.h>
+#include <QWidget>
 #include <QQueue>
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
 const int BaudRate = 1382400;
 typedef QQueue<unsigned char> * Q;
-class Buffer :public QObject, public QThread {
+class Painter :public QWidget {
 	Q_OBJECT
-		signals :
-	void ImageUpdate (const QImage&);
-private:
-	QImage img;
-	QList<Q> list;
-	int index;
-	int fin;
-	unsigned char ans[240][320][3] = { 0 };
-protected:
-	void run ()override;
 public:
-	int _size;
-	void enqueue (const char& t);
-	Buffer (QObject * parent = nullptr);
+	QImage img;
+	Painter (QWidget * parent = nullptr) :QWidget (parent) {};
+	public slots:
+	void paintEvent (QPaintEvent *event)override;
 };
 #ifdef DEBUG
-class Writer :public QQueue<unsigned char>, public QThread {
+class Writer :public QObject, public QQueue<unsigned char>, public QThread {
+	Q_OBJECT
+		signals :
+	void Image (const QImage&);
 private:
+	QImage img;
+	int _size;
+	unsigned char ans[240][320][3] = { 0 };
 	QFile* file;
 	QTextStream* stream;
 protected:
 	void run ()override;
 public:
-	Writer (QObject * parent = nullptr, int index = 0);
+	Writer (QObject * parent = nullptr, int index = 0, int size = 1);
 	~Writer ();
 };
 class Write2File :public QObject {
+	Q_OBJECT
+		signals :
+	void all_update (const QImage&);
 private:
 	QList <Writer*> list;
 	int count;
+	int _size;
 public:
-	Write2File (QObject * parent = nullptr);
+	Write2File (QObject * parent = nullptr, int size = 1);
 	~Write2File ();
 	void enqueue (const char& t);
 };
@@ -81,7 +80,7 @@ public:
 	void close ()override;
 	bool open (OpenMode mode)override;
 signals:
-	void char_read (QByteArray*);
+	void char_read (QByteArray);
 };
 typedef QPushButton* Button;
 class UserInterface : public QMainWindow {
@@ -93,9 +92,8 @@ public:
 private:
 	int size;
 	enum class UartState { ON, OFF } currentUartState;
-	QLabel* paint_area;
+	Painter* paint_area;
 	SerialPort *currentSerialPort;
-	Buffer* buffer;
 #ifdef DEBUG
 	Write2File* W2F;
 #endif
