@@ -7,13 +7,12 @@ UserInterface::UserInterface (QWidget *parent)
 	this->setFixedHeight (460 * size);
 	this->setFixedWidth (320 * size);
 	this->setObjectName ("MainWindow");
-	buffer = new Buffer (this);
 #ifdef DEBUG
-	W2F = new Write2File (this);
+	W2F = new Write2File (this, size);
 #endif
-	paint_area = new QLabel ("interesting", this);
-	buffer->_size = size;
+	paint_area = new Painter (this);
 	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
+	paint_area->show ();
 	for (int i = 0; i < 6; ++i) {
 		Control_array[i] = new QPushButton (this);
 		Control_array[i]->setGeometry (20 * size + (i % 3) * 100 * size, 270 * size + (i / 3) * 60 * size, 80 * size, 45 * size);
@@ -80,19 +79,19 @@ UserInterface::UserInterface (QWidget *parent)
 		}
 	});
 
-	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray* arr) {
-		for (char ch : (*arr)) {
-			buffer->enqueue (ch);
+	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray arr) {
+		for (char ch : arr) {
 #ifdef DEBUG
 			W2F->enqueue (ch);
 #endif
 		}
-		delete arr;
 		currentSerialPort->pause = false;
 	});
 
-	connect (buffer, &Buffer::ImageUpdate, [=](const QImage& img) {
-		paint_area->setPixmap (QPixmap::fromImage (img));
+	connect (W2F, &Write2File::all_update, [=](const QImage&img) {
+		qDebug () << "success";
+		paint_area->img = img;
+		paint_area->update ();
 	});
 }
 
