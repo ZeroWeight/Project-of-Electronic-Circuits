@@ -174,7 +174,7 @@ void Writer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
 }
 
 const QMetaObject Writer::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_Writer.data,
+    { &QThread::staticMetaObject, qt_meta_stringdata_Writer.data,
       qt_meta_data_Writer,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
@@ -191,14 +191,12 @@ void *Writer::qt_metacast(const char *_clname)
         return static_cast<void*>(const_cast< Writer*>(this));
     if (!strcmp(_clname, "QQueue<unsigned char>"))
         return static_cast< QQueue<unsigned char>*>(const_cast< Writer*>(this));
-    if (!strcmp(_clname, "QThread"))
-        return static_cast< QThread*>(const_cast< Writer*>(this));
-    return QObject::qt_metacast(_clname);
+    return QThread::qt_metacast(_clname);
 }
 
 int Writer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QObject::qt_metacall(_c, _id, _a);
+    _id = QThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
@@ -219,27 +217,27 @@ void Writer::Image(const QImage & _t1)
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
-struct qt_meta_stringdata_Write2File_t {
+struct qt_meta_stringdata_Bus_t {
     QByteArrayData data[3];
-    char stringdata0[23];
+    char stringdata0[16];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Write2File_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_Bus_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_Write2File_t qt_meta_stringdata_Write2File = {
+static const qt_meta_stringdata_Bus_t qt_meta_stringdata_Bus = {
     {
-QT_MOC_LITERAL(0, 0, 10), // "Write2File"
-QT_MOC_LITERAL(1, 11, 10), // "all_update"
-QT_MOC_LITERAL(2, 22, 0) // ""
+QT_MOC_LITERAL(0, 0, 3), // "Bus"
+QT_MOC_LITERAL(1, 4, 10), // "all_update"
+QT_MOC_LITERAL(2, 15, 0) // ""
 
     },
-    "Write2File\0all_update\0"
+    "Bus\0all_update\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_Write2File[] = {
+static const uint qt_meta_data_Bus[] = {
 
  // content:
        7,       // revision
@@ -261,10 +259,10 @@ static const uint qt_meta_data_Write2File[] = {
        0        // eod
 };
 
-void Write2File::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Bus::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Write2File *_t = static_cast<Write2File *>(_o);
+        Bus *_t = static_cast<Bus *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->all_update((*reinterpret_cast< const QImage(*)>(_a[1]))); break;
@@ -274,8 +272,8 @@ void Write2File::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (Write2File::*_t)(const QImage & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Write2File::all_update)) {
+            typedef void (Bus::*_t)(const QImage & );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Bus::all_update)) {
                 *result = 0;
                 return;
             }
@@ -283,26 +281,26 @@ void Write2File::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 }
 
-const QMetaObject Write2File::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_Write2File.data,
-      qt_meta_data_Write2File,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject Bus::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_Bus.data,
+      qt_meta_data_Bus,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *Write2File::metaObject() const
+const QMetaObject *Bus::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Write2File::qt_metacast(const char *_clname)
+void *Bus::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_Write2File.stringdata0))
-        return static_cast<void*>(const_cast< Write2File*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_Bus.stringdata0))
+        return static_cast<void*>(const_cast< Bus*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int Write2File::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Bus::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -320,7 +318,7 @@ int Write2File::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Write2File::all_update(const QImage & _t1)
+void Bus::all_update(const QImage & _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
