@@ -27,6 +27,8 @@ $RECYCLE.BIN/
 *.PrjPcbStructure
 *.suo
 *.pdb
+*.Dat
+*.OutJob
 *.tlog
 *.lastbuildstate
 *.filters
