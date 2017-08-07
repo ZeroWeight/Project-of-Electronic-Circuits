@@ -1,0 +1,29 @@
+Bill of Material for 
+On 8/7/2017 at 20:51:56
+
+ Comment             Pattern     Quantity  Components
+------------------------------------------------------------------------------
+ BTN                 BTN7971B         2    BTN7971B1, BTN7971B2                              
+ Cap Pol1            RB7.6-15         3    Cout3, Cout5, Cout5F         Polarized Capacitor (Radial) 
+ Cap                 RAD-0.3         15    Cboot3, Cboot5, Cboot5F      Capacitor            
+                                           Ccomp3, Ccomp5, Ccomp5F
+                                           CcompB3, CcompB5, CcompB5F
+                                           Cin3, Cin5, Cin5F, Css3, Css5
+                                           Css5F
+ D Schottky          SMB              3    D3, D5, D5F                  Schottky Diode       
+ HCT244              DIP20            1    HCT244                                            
+ Header 2            HDR1X2           2    P_Motor, P_PWR               Header, 2-Pin        
+ Header 3            HDR1X3           1    P_DuoJ                       Header, 3-Pin        
+ Header 4X2          HDR2X4           6    MotorControl&FPGA, P3V3, P5  Header, 4-Pin, Dual row 
+                                           P_GND1, P_GND2, P_Reserved
+ Header 8X2          HDR2X8           1    PONout                       Header, 8-Pin, Dual row 
+ Header 9X2          HDR2X9           1    POVin                        Header, 9-Pin, Dual row 
+ Inductor            0805             3    L3, L5, L5F                  Inductor             
+ Res1                AXIAL-0.3       32    R1, R2, R3, R4, R5, R6, R7   Resistor             
+                                           R8, R9, R10, R11, R12, R13
+                                           R14, Rcomp3, Rcomp5, Rcomp5F
+                                           RenB3, RenB5, RenB5F, RenT3
+                                           RenT5, RenT5F, Rfbb3, Rfbb5
+                                           Rfbb5F, Rfbt3, Rfbt5, Rfbt5F
+                                           Rt3, Rt5, Rt5F
+ TPS54160DGQR        S-PDSO-G10       3    U3, U5, U5FPGA               Imported             
