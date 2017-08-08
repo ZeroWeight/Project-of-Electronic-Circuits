@@ -12,10 +12,35 @@ UserInterface::UserInterface (QWidget *parent)
 	paint_area = new Painter (this);
 	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
 	paint_area->show ();
-	for (int i = 0; i < 6; ++i) {
+	for (int i = 0; i < 12; ++i) {
 		Control_array[i] = new QPushButton (this);
-		Control_array[i]->setGeometry (20 * size + (i % 3) * 100 * size, 270 * size + (i / 3) * 60 * size, 80 * size, 45 * size);
+		Control_array[i]->setGeometry (20 * size + (i & 3) * 75 * size, 245 * size + (i >> 2) * 45 * size, 50 * size, 40 * size);
 		Control_array[i]->setObjectName (QString ("button_") + QString::number (i));
+		connect (Control_array[i], &QPushButton::pressed, [=] {
+			switch (i) {
+			case 0:byte = 0xD4; break;//11 01 01 00
+			case 1:byte = 0xD0; break;//11 01 00 00
+			case 2:byte = 0xD8; break;//11 01 10 00
+
+			case 3:byte = 0xF0; break;//11 11 00 00
+
+			case 4:byte = 0xC4; break;//11 00 01 00
+			case 5:byte = 0xC0; break;//11 00 00 00
+			case 6:byte = 0xC8; break;//11 00 10 00
+
+			case 7:byte = 0xFC; break;//11 11 11 00
+
+			case 8:byte = 0xE4; break;//11 10 01 00
+			case 9:byte = 0xE0; break;//11 10 01 00
+			case 10:byte = 0xE8; break;//11 10 01 00
+
+			case 11:byte = 0xCC; break;//11 00 11 00
+			default:break;
+			}
+		});
+		connect (Control_array[i], &QPushButton::released, [=] {
+			byte = 0xC0;
+		});
 	}
 	//SerialPort Interface
 	currentSerialPort = new SerialPort (this);
@@ -24,7 +49,7 @@ UserInterface::UserInterface (QWidget *parent)
 	settingCOM = new QComboBox (this);
 	uart_on_off = new QPushButton (this);
 	timer = new QTimer (this);
-	timer->setInterval (1000);
+	timer->setInterval (10);
 
 	settingCOM->setObjectName ("settingCOM");
 	settingCOM->setGeometry (20 * size, 390 * size, 280 * size, 20 * size);
