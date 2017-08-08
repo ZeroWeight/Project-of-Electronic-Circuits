@@ -99,7 +99,7 @@ private:
 	SerialPort *currentSerialPort;
 	Bus* core;
 	Ui::UserInterfaceClass ui;
-	Button Control_array[6];
+	Button Control_array[12];
 	QComboBox* settingCOM;
 	QPushButton* uart_on_off;
 signals:

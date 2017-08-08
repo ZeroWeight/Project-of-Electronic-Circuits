@@ -43,9 +43,17 @@ stop: 1.0 #111D29);
 border-color: #0A1320;
 color:#6A6864;
 }
-QPushButton#button_0{qproperty-text: "Left Front";}
-QPushButton#button_1{qproperty-text: "Go Ahead";}
-QPushButton#button_2{qproperty-text: "Right Front";}
-QPushButton#button_3{qproperty-text: "Left Rear";}
-QPushButton#button_4{qproperty-text: "Go Backward";}
-QPushButton#button_5{qproperty-text: "Right Rear";}
+QPushButton#button_0{qproperty-text: "F01 L01";}
+QPushButton#button_1{qproperty-text: "F01 00";}
+QPushButton#button_2{qproperty-text: "F01 R10";}
+QPushButton#button_3{qproperty-text: "S11 00";}
+
+QPushButton#button_4{qproperty-text: "00 L01";}
+QPushButton#button_5{qproperty-text: "00 00";}
+QPushButton#button_6{qproperty-text: "00 R10";}
+QPushButton#button_7{qproperty-text: "S11 S11";}
+
+QPushButton#button_8{qproperty-text: "B10 L01";}
+QPushButton#button_9{qproperty-text: "B10 00";}
+QPushButton#button_10{qproperty-text: "B10 R10";}
+QPushButton#button_11{qproperty-text: "00 S11";}
