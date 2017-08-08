@@ -6,8 +6,10 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QEvent>
 #include <QFile>
 #include <QImage>
+#include <QKeyEvent>
 #include <QList>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -17,12 +19,13 @@
 #include <QQueue>
 #include <QSerialPort>
 #include <QSerialPortInfo>
-#include <QToolTip>
 #include <QTextStream>
+#include <QTimer>
+#include <QToolTip>
 #include <QThread>
 #include <QWidget>
 
-const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
+const int buffer_size = 115200;//153602;//a image is followed with 0x0D,0x0A
 const int BaudRate = 1382400;
 typedef QQueue<unsigned char> * Q;
 typedef QPushButton* Button;
@@ -80,16 +83,21 @@ signals:
 };
 class UserInterface : public QMainWindow {
 	Q_OBJECT
-
 public:
 	UserInterface (QWidget *parent = 0);
 	~UserInterface ();
+protected:
+	void keyPressEvent (QKeyEvent *event)override;
+	void keyReleaseEvent (QKeyEvent* event)override;
 private:
+	QTimer* timer;
+	QSerialPort* sender;
+	unsigned char byte;
 	int size;
 	enum class UartState { ON, OFF } currentUartState;
 	Painter* paint_area;
 	SerialPort *currentSerialPort;
-	Bus* W2F;
+	Bus* core;
 	Ui::UserInterfaceClass ui;
 	Button Control_array[6];
 	QComboBox* settingCOM;
