@@ -30,6 +30,8 @@ $RECYCLE.BIN/
 *.Dat
 *.OutJob
 *.tlog
+*.stash
+*Makefile*
 *.lastbuildstate
 *.filters
 *.vcxproj
