@@ -37,6 +37,10 @@ $RECYCLE.BIN/
 *.vcxproj
 *.ilk
 *.db
+*.SchDoc
+*.drc
+*.html
+*.SchDocPreview
 
 # Linker output
 *.ilk
