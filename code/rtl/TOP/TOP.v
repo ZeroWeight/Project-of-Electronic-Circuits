@@ -30,11 +30,11 @@ module TOP (
     /*-------------------------------------------------
      |                    Servo                       |
      -------------------------------------------------*/
-     localparam [7:0] min_angle = 8'd195;
-     localparam [7:0] max_angle = 8'd255;
-     localparam [7:0] default_angle = 8'd225;
-     reg[7:0] angle = default_angle;
-     SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
+    localparam [7:0] min_angle = 8'd195;
+    localparam [7:0] max_angle = 8'd255;
+    localparam [7:0] default_angle = 8'd225;
+    reg[7:0] angle = default_angle;
+    SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
     
     /*-------------------------------------------------
      |                      UART                      |
