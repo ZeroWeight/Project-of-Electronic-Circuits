@@ -85,3 +85,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# LaTeX generated files
+*.fdb_latexmk
+*.fls
+*.toc
