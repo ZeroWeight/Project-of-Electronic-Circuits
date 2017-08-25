@@ -260,10 +260,58 @@ NI myRIO内嵌Xilinx Zynq芯片，使学生可以利用双核ARM Cortex-A9的
 具有一定复杂度的系统设计，采用LabView语言进行可视化编程。
 通过myRIO可以大幅简化控制算法如PID的调试过程，显著降低开发难度，加速开发进度。
 \section{基于FPGA的数字系统框图}
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \includegraphics[width=60mm]{FPGABlockDesign.png}
+    \caption{基于FPGA的数字系统框图}
+    \label{FPGABlockDesign}
+\end{wrapfigure}
+如图\ref{FPGABlockDesign}所示，左侧为封装的顶层模块，从右侧可以看出共分为8个子模块。
+\begin{itemize}
+    \item CLK_GEN
+
+    该模块对100MHz系统时钟分频，输出4个时钟分别供串口、舵机、电机、摄像头使用。
+
+    \item UART_RX
+
+    蓝牙串口接收模块，RX为数据线，每从上位机接收一个码元即触发finish信号，并将数据存
+    在data寄存器供其他模块使用。同时内部还提供了一个error接口，接收数据发生错误时触发。
+
+    \item UART_TX
+
+    蓝牙串口发送模块，TX为数据线，当触发start信号后，将data寄存器中的内容发送给上位机，
+    发送完成后会得到一个finish信号反馈。
+
+    \item SERVO
+
+    舵机控制模块，从串口接收转向控制指令，输出舵机PWM信号。
+
+    \item MOTOR
+
+    电机控制模块，同样从串口接收指令，输出电机使能和PWM信号。
+
+    \item OV_INIT
+
+    摄像头初始化模块，SCL和SDA为SCCB协议的时钟线和数据线，初始化前initialized_flag为
+    低电平，OV_STORE和OV_READ处于失能状态，初始化完成后拉高initialized_flag，摄像头
+    便可正常工作。
+
+    \item OV_STORE
+
+    将摄像头采集到的图像存储于FIFO中，存储完成一帧后触发new_frame_flag信号，等待FPGA
+    读取图像结束后才继续采集下一帧。
+
+    \item OV_READ
+
+    从FIFO中读取一帧图像，并存储在frame_data寄存器中，读取完成后触发两个信号，一个是
+    frame_read_flag，通知摄像头可以继续采集下一帧图像，另一个是new_frame_data_flag，
+    通知顶层模块将读取到的数据发送给上位机。
+    
+\end{itemize}
 \section{传感器/执行机构接口电路图}
 \section{基于Webench的电源电路仿真}
 WEBENCH是TI公司提供的设计环境，通过软件工具提供定制电源等的设计，通过使用WEBENCH可以
-提升设计效率。整体的设计思路如下
+提升设计效率。整体的设计思路如下：
 \begin{itemize}
     \item 输入电压的确定
 
