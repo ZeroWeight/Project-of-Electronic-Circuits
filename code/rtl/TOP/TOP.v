@@ -20,7 +20,7 @@ module TOP (
      |                     Clocks                     |
      -------------------------------------------------*/
     parameter SYS_CLK_FREQ = 100_000_000;
-    parameter BAUD_RATE = 1382400;
+    parameter BAUD_RATE = 115200;
     
     wire clk_uart, clk_100kHz, clk_25MHz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
@@ -30,11 +30,11 @@ module TOP (
     /*-------------------------------------------------
      |                    Servo                       |
      -------------------------------------------------*/
-     localparam [7:0] min_angle = 8'd195;
-     localparam [7:0] max_angle = 8'd255;
-     localparam [7:0] default_angle = 8'd225;
-     reg[7:0] angle = default_angle;
-     SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
+    localparam [7:0] min_angle = 8'd195;
+    localparam [7:0] max_angle = 8'd255;
+    localparam [7:0] default_angle = 8'd225;
+    reg[7:0] angle = default_angle;
+    SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
     
     /*-------------------------------------------------
      |                      UART                      |
