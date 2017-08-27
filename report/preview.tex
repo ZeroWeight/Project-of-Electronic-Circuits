@@ -1,5 +1,5 @@
 % compile with xelatex
-\documentclass[UTF8,a4paper]{paper}
+\documentclass[a4paper]{paper}
 \usepackage{ctex}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -237,20 +237,6 @@ bts7960/7961芯片是接受5VPWM信号调制的，输入电压5.5V至27V@43A的�
 得到车辆的具体位置，希望通过反馈等方式希望得到更准确的车辆控制。
 
 \subsection{其他注意事项}
-通过查阅给定的技术手册我们发现FPGA输入电流1A，标准的输出电压为3.3V，
-而不论是电机驱动的PWM还是舵机驱动的PWM均为5V，这中间需要设计适当的接口
-电路，同时，由于工程量比较大，担心FPGA会出现总线电流过大或无法驱动相关
-接口电路的情况，因此我们采用了74HC244芯片作为接口的辅助电路，74HC244是
-一款高速CMOS驱动芯片，通过HC244我们可以顺利的将3.3V输出转化为5V，并
-提升驱动能力。
-
-通过对摄像头模块OV7670的数据手册的学习，我们了解到OV7670初始化采用的是
-SCCB通信协议，SCCB（Serial Camera Control Bus）
-是和I2C相同的一个协议。 SIO\_C和SIO\_D分别为SCCB总线的时钟线和数据线，为了
-方面对多个设备进行控制，OV的SCCB两个端口采用的均是OC门输出，需要上拉4.7k
-电阻实现输出高低电平，这些需要在设计PCB的时候尽可能的考虑到并保证接线的
-稳定性和摄像头位置的稳定性。
-
 在设计对车辆相对位置进行测量的过程中，考虑到FPGA在解算浮点数方面比较难以开发，
 我们选用了NI myRIO进行解算和控制，并采用myRIO自带的WiFi进行相关数据的回传。
 
@@ -310,6 +296,70 @@ NI myRIO内嵌Xilinx Zynq芯片，使学生可以利用双核ARM Cortex-A9的
     
 \end{itemize}
 \section{传感器/执行机构接口电路图}
+\subsection{传感器电路}
+\subsubsection{数字接口电路}
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \includegraphics[width = 60mm]{ov47.jpg}
+    \caption{OV上拉电阻和转接电路}
+    \label{OV}
+\end{wrapfigure}
+这部分主要是完成数字模块之间的接口电路，由于各个数字模块已经将输出电平统一标准化为TTL电平，
+因此这部分的关键主要是接口通信协议的实现，主要有FPGA方面实现了SCCB接口通信协议，串口通信协议，
+摄像头数据读取协议等。另外，SIO\_C和SIO\_D分别为SCCB总线的时钟线和数据线，为了
+方面对多个设备进行控制，OV的SCCB两个端口采用的均是OC门输出，需要上拉4.7k
+电阻实现输出高低电平，这些需要在设计PCB的时候尽可能的考虑到并保证接线的
+稳定性和摄像头位置的稳定性，因此需要在PCB上统一制作并提供对FPGA的简单的接线电路，这部分的电路
+可以如图\ref{OV}所示。
+
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \includegraphics[width =60mm]{motor0.jpg}
+    \caption{74HC244驱动器电路}
+    \label{motor0}
+\end{wrapfigure}
+另一部分的接口电路问题是3.3V电平标准和5V电平不匹配的问题以及同时设计到的FPGA驱动能力不足的问题
+通过查阅给定的技术手册我们发现FPGA输入电流1A，标准的输出电压为3.3V，
+而不论是电机驱动的PWM还是舵机驱动的PWM均为5V，这中间需要设计适当的接口
+电路，同时，由于工程量比较大，担心FPGA会出现总线电流过大或无法驱动相关
+接口电路的情况，因此我们采用了74HC244芯片作为接口的辅助电路，74HC244是
+一款高速CMOS驱动芯片，支持三态门使能，通过HC244我们可以顺利的将3.3V输出转化为5V，
+并提升驱动能力。根据74HC244的接线要求，我们在输入端接入下拉电阻1k实现相关功能。这部分的电路
+有如图\ref{motor0}所示。同时我们将剩下的74HC244引脚同样通过排针引出，留待之后使用。
+
+\subsubsection{模拟接口电路}
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \includegraphics[width = 60mm]{enc.jpg}
+    \caption{ENC-03模块外部电路图}
+    \label{ENC}
+\end{wrapfigure}
+我们计划采用输出模拟电压的ENC-03陀螺仪，这是是一种应用科氏力原理的角速度传感器，
+陀螺输出一个和角速度成正比的模拟电压信号。通过积分电路可以得到相关的角度等。根据ENC-03
+技术手册，我们设计输出放大电路如图\ref{ENC}所示，整个电路由两个滤波器组成，左侧为低通滤波器，
+用于滤除传感器高频噪声，右侧为高通滤波-放大电路，用于放大电压信号和滤除低频温漂。
+
+进一步，我们搭建基本积分电路可以得到角度信息，两个信息通过AD模块可以返回给主控设备。
+由于我们计划采用myRIO进行位置信息的测量，因此这部分可以直接使用LabVIEW语言在myRIO上完成，
+就没有设计电路的必要了。
+
+\subsection{执行接口电路}
+这部分主要描述的是对电机和舵机的驱动电路
+
+对于舵机驱动，单片机输出高电平为3.3V的PWM脉冲，经过前文提到过的74HC模块转5V驱动舵机旋转。
+
+\begin{wrapfigure}{r}{0pt}
+    \centering
+    \includegraphics[width =60mm]{motor1.jpg}
+    \caption{电机驱动电路}
+    \label{motor1}
+\end{wrapfigure}
+对于电机驱动，我们使用BTN7970模块，如图\ref{motor1}所示。这里为了方便后文叙述，两片IN引脚被
+命名为IN1，IN2，两片INT引脚被明明为INT1,INT2。我们将INT1,INT2短接并输入PWM波形控制电机转动速度。
+将IN1，IN2分别接高低电平控制电机正转反转。例如\{INT1 = 0,INT2 = 1\}代表电机正转，\{INT1 = 1,
+INT2 = 0\}代表电机反转。当\{INT1 = 0,INT2 = 0\}时，H桥全部关断，表示不控制电机转动。
+当\{INT1 = 1,INT2 = 1\}时，H桥下部导通，电机两端短接，使得电机的机械能通过电磁感应和短路线
+迅速释放，实现刹车功能。BTN相关引脚仍为5V接线，因此使用74HC244完成相关的电平转换和放大工作。
 \section{基于Webench的电源电路仿真}
 WEBENCH是TI公司提供的设计环境，通过软件工具提供定制电源等的设计，通过使用WEBENCH可以
 提升设计效率。整体的设计思路如下：
