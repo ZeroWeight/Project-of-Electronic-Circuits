@@ -355,7 +355,7 @@ NI myRIO内嵌Xilinx Zynq芯片，使学生可以利用双核ARM Cortex-A9的
     \label{motor1}
 \end{wrapfigure}
 对于电机驱动，我们使用BTN7970模块，如图\ref{motor1}所示。这里为了方便后文叙述，两片IN引脚被
-命名为IN1，IN2，两片INT引脚被明明为INT1,INT2。我们将INT1,INT2短接并输入PWM波形控制电机转动速度。
+命名为IN1，IN2，两片INT引脚被命名为INT1,INT2。我们将INT1,INT2短接并输入PWM波形控制电机转动速度。
 将IN1，IN2分别接高低电平控制电机正转反转。例如\{INT1 = 0,INT2 = 1\}代表电机正转，\{INT1 = 1,
 INT2 = 0\}代表电机反转。当\{INT1 = 0,INT2 = 0\}时，H桥全部关断，表示不控制电机转动。
 当\{INT1 = 1,INT2 = 1\}时，H桥下部导通，电机两端短接，使得电机的机械能通过电磁感应和短路线
