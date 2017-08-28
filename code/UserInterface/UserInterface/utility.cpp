@@ -33,7 +33,7 @@ Bus::~Bus () {
 Writer::Writer (QObject* parent, int index, int size) : QThread (parent) {
 	this->_size = size;
 	file = new QFile (this);
-	file->setFileName (QString::number (index) + ".pic");
+	file->setFileName (QString::number (index) + ".txt");
 	file->open (QIODevice::WriteOnly);
 	stream = new QTextStream (file);
 }
@@ -76,12 +76,20 @@ void SerialPort::run () {
 	while (running) {
 		if (this->isReadable ()) {
 			pause = true;
-			emit this->char_read (this->read (1));
+			QByteArray temp;
+			try {
+				temp = this->readAll ();
+			}
+			catch (QException ex) {
+				qDebug () << ex.what ();
+				continue;
+			}
+			emit this->char_read (temp);
 			while (pause);
 		}
 		//NOTICE: if the host breakdown, try to uncommand this and enlarge the value of n
 		//if the value of n is larger than 10,000, there would be a bug
-		//for (int i = 0; i < 200/*n*/; i++);
+		//for (int i = 0; i < 10000/*n*/; i++);
 	}
 }
 

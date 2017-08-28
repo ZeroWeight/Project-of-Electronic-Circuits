@@ -127,7 +127,9 @@ UserInterface::UserInterface (QWidget *parent)
 	this->setFocusPolicy (Qt::StrongFocus);
 }
 
-UserInterface::~UserInterface () {}
+UserInterface::~UserInterface () {
+	system ("del *.txt");
+}
 
 void UserInterface::keyPressEvent (QKeyEvent *event) {
 	if (!event->isAutoRepeat ()) {

@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QEvent>
+#include <QException>
 #include <QFile>
 #include <QImage>
 #include <QKeyEvent>
@@ -26,7 +27,7 @@
 #include <QWidget>
 
 const int buffer_size = 153602;//a image is followed with 0x0D,0x0A
-const int BaudRate = 115200;//1382400;
+const int BaudRate = 115200 * 8;
 
 typedef QQueue<unsigned char> * Q;
 typedef QPushButton* Button;

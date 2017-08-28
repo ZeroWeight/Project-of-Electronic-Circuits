@@ -41,7 +41,7 @@ $RECYCLE.BIN/
 *.drc
 *.html
 *.SchDocPreview
-
+*.txt
 # Linker output
 *.ilk
 *.map
