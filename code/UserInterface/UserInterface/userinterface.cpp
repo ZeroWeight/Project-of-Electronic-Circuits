@@ -2,7 +2,7 @@
 
 UserInterface::UserInterface (QWidget *parent)
 	: QMainWindow (parent) {
-	byte = 0xC0;//11 00 00 00
+	byte = 0x00;//11 00 00 00
 	ui.setupUi (this);
 	size = QApplication::desktop ()->height () / 500;
 	this->setFixedHeight (460 * size);
@@ -18,28 +18,28 @@ UserInterface::UserInterface (QWidget *parent)
 		Control_array[i]->setObjectName (QString ("button_") + QString::number (i));
 		connect (Control_array[i], &QPushButton::pressed, [=] {
 			switch (i) {
-			case 0:byte = 0xD4; break;//11 01 01 00
-			case 1:byte = 0xD0; break;//11 01 00 00
-			case 2:byte = 0xD8; break;//11 01 10 00
+			case 0:byte = 0x6C; break;//011 011 00
+			case 1:byte = 0x60; break;//011 000 00
+			case 2:byte = 0x78; break;//011 110 00
 
-			case 3:byte = 0xF0; break;//11 11 00 00
+			case 3:byte = 0xA0; break;//101 000 00
 
-			case 4:byte = 0xC4; break;//11 00 01 00
-			case 5:byte = 0xC0; break;//11 00 00 00
-			case 6:byte = 0xC8; break;//11 00 10 00
+			case 4:byte = 0x0C; break;//000 011 00
+			case 5:byte = 0x00; break;//000 000 00
+			case 6:byte = 0x18; break;//000 110 00
 
-			case 7:byte = 0xFC; break;//11 11 11 00
+			case 7:byte = 0xB4; break;//101 101 00
 
-			case 8:byte = 0xE4; break;//11 10 01 00
-			case 9:byte = 0xE0; break;//11 10 01 00
-			case 10:byte = 0xE8; break;//11 10 01 00
+			case 8:byte = 0xCC; break;//110 011 00
+			case 9:byte = 0xC0; break;//110 000 00
+			case 10:byte = 0xD8; break;//110 110 00
 
-			case 11:byte = 0xCC; break;//11 00 11 00
+			case 11:byte = 0x14; break;//000 101 00
 			default:break;
 			}
 		});
 		connect (Control_array[i], &QPushButton::released, [=] {
-			byte = 0xC0;
+			byte = 0x00;
 		});
 	}
 	//SerialPort Interface
@@ -132,25 +132,25 @@ UserInterface::~UserInterface () {}
 void UserInterface::keyPressEvent (QKeyEvent *event) {
 	if (!event->isAutoRepeat ()) {
 		switch (event->key ()) {
-		case Qt::Key_B: byte |= 0x30; break;// 11 11 xx 00 -> break(F/B)
-		case Qt::Key_R: byte |= 0x0C; break;// 11 xx 11 00 -> reset(R/L)
-		case Qt::Key_Up: byte |= 0x10; byte &= 0xDF; break;// 11 01 xx 00 -> forward
-		case Qt::Key_Down: byte |= 0x20; byte &= 0xEF; break;// 11 10 xx 00 backword
-		case Qt::Key_Left: byte |= 0x04; byte &= 0xF7; break;// 11 xx 01 00 -> left trn
-		case Qt::Key_Right: byte |= 0x08; byte &= 0xFB; break;//11 xx 10 00 -> right trn
+		case Qt::Key_B: byte &= 0x1F; byte |= 0xA0; break;// 101 yyy zz -> break(F/B)
+		case Qt::Key_R: byte &= 0xE3; byte |= 0x14; break;// xxx 101 zz -> reset(R/L)
+		case Qt::Key_Up: byte &= 0x1F; byte |= 0x60; break;// 011 yyy zz -> forward
+		case Qt::Key_Down: byte &= 0x1F; byte |= 0xC0; break;// 110 yyy zz -> backword
+		case Qt::Key_Left: byte &= 0xE3; byte |= 0x0C; break;// xxx 011 zz -> left trn
+		case Qt::Key_Right: byte &= 0xE3; byte |= 0x18; break;//xxx 110 zz -> right trn
 		default:break;
 		}
-		qDebug () << 'P' << QString::number (byte, 2);
+		//qDebug () << 'P' << QString::number (byte, 2);
 	}
 }
 
 void UserInterface::keyReleaseEvent (QKeyEvent*event) {
 	if (!event->isAutoRepeat ()) {
 		switch (event->key ()) {
-		case Qt::Key_B:case Qt::Key_Up: case Qt::Key_Down: byte &= 0xCF; break;//11 00 xx 00 F/B stop
-		case Qt::Key_R:case Qt::Key_Left:case Qt::Key_Right:byte &= 0xF3; break;//11 xx 00 R/L stop
+		case Qt::Key_B:case Qt::Key_Up: case Qt::Key_Down: byte &= 0x1F; break;//000 yyy zz F/B stop
+		case Qt::Key_R:case Qt::Key_Left:case Qt::Key_Right:byte &= 0xE3; break;//xxx 000 zz R/L stop
 		default: break;
 		}
-		qDebug () << 'R' << QString::number (byte, 2);
+		//qDebug () << 'R' << QString::number (byte, 2);
 	}
 }

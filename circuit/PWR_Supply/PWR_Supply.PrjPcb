@@ -124,7 +124,7 @@ GenerateClassCluster=0
 DocumentUniqueId=MBOCHQXF
 
 [Document6]
-DocumentPath=PCB.PcbDoc
+DocumentPath=PCB.pcb
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
