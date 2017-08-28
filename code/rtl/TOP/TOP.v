@@ -4,6 +4,8 @@ module TOP (
     input sys_clk,
     input rst_n,
     output servo_pwm,
+    output [1:0] motor_en,
+    output motor_pwm,
     input rx_pin,
     output tx_pin,
     output scl, // sccb clock
@@ -35,6 +37,12 @@ module TOP (
     localparam [7:0] default_angle = 8'd225;
     reg[7:0] angle = default_angle;
     SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
+    
+    /*-------------------------------------------------
+     |                    Motor                       |
+     -------------------------------------------------*/
+    reg[1:0] direction = 2'b01;
+    MOTOR motor(clk_100kHz, rst_n, direction, motor_en, motor_pwm);
     
     /*-------------------------------------------------
      |                      UART                      |
@@ -76,18 +84,17 @@ module TOP (
     always @(posedge sys_clk or negedge rst_n)
         if (!rst_n) angle <= default_angle;
         else if (rx_finish_reg[1] & ~rx_finish_reg[2]) // posedge
-        if ((rx_data & 8'hC3) == 8'hC0) begin
-            case (rx_data[5:4]) // motor
-            2'b00: ;
-            2'b01: ;
-            2'b10: ;
-            2'b11: ;
+        if ((rx_data & 8'h03) == 8'h00) begin
+            case (rx_data[7:5]) // motor
+            3'b011: direction <= 2'b11; // forward
+            3'b110: direction <= 2'b00; // backward
+            default: direction <= 2'b01; // halt
             endcase
-            case (rx_data[3:2]) // servo
-            2'b00: ;
-            2'b01: if (angle < max_angle) angle <= angle + 1'd1;
-            2'b10: if (angle > min_angle) angle <= angle - 1'd1;
-            2'b11: angle <= default_angle;
+            case (rx_data[4:2]) // servo
+            3'b011: if (angle < max_angle) angle <= angle + 1'd1; // turn left
+            3'b110: if (angle > min_angle) angle <= angle - 1'd1; // turn right
+            3'b101: angle <= default_angle; // straight
+            default: ;
             endcase
         end
          
