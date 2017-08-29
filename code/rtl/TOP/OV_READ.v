@@ -12,7 +12,7 @@ module OV_READ (
     output reg new_data = 1'b0,
     output reg[7:0] data
 );
-    localparam [11:0] cnt_100us = 12'd2500;
+    localparam [11:0] cnt_100us = 12'd1250; // 2500
     reg[11:0] delay_cnt = 1'd0;
     localparam [17:0] frame_bytes = 320 * 240 * 2;
     reg[17:0] bytes_remaining = frame_bytes;

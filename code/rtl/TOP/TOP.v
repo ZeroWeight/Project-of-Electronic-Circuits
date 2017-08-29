@@ -112,4 +112,9 @@ module TOP (
         else if (tx_start) begin if (!tx_finish) tx_start <= 1'b0; end
         else if (!initialized) begin tx_start <= new_init_data_reg[1] & ~new_init_data_reg[2]; tx_data <= init_data; end
         else begin tx_start <= new_frame_data_reg[1] & ~new_frame_data_reg[2]; tx_data <= frame_data; end
+        
+    /*-------------------------------------------------
+     |                  Debug LEDs                    |
+     -------------------------------------------------*/
+    assign led[0] = initialized;
 endmodule
