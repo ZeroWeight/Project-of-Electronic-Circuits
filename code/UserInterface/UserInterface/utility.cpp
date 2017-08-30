@@ -75,7 +75,6 @@ SerialPort::~SerialPort () {
 void SerialPort::run () {
 	while (running) {
 		if (this->isReadable ()) {
-			pause = true;
 			QByteArray temp;
 			try {
 				temp = this->readAll ();
@@ -85,11 +84,7 @@ void SerialPort::run () {
 				continue;
 			}
 			emit this->char_read (temp);
-			while (pause);
 		}
-		//NOTICE: if the host breakdown, try to uncommand this and enlarge the value of n
-		//if the value of n is larger than 10,000, there would be a bug
-		//for (int i = 0; i < 10000/*n*/; i++);
 	}
 }
 
@@ -111,4 +106,5 @@ bool SerialPort::open (OpenMode mode) {
 void Painter::paintEvent (QPaintEvent *) {
 	QPainter p (this);
 	p.drawImage (this->rect (), this->img);
+	this->img.save ("pic\\" + QString::number (count++) + ".png", 0, 100);
 }

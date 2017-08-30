@@ -47,6 +47,7 @@ $RECYCLE.BIN/
 *.map
 *.exp
 *.ipch
+*.png
 # Precompiled Headers
 *.gch
 *.pch

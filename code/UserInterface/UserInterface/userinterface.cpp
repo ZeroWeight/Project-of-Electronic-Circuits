@@ -111,6 +111,7 @@ UserInterface::UserInterface (QWidget *parent)
 	connect (currentSerialPort, &SerialPort::char_read, [=](QByteArray arr) {
 		for (char ch : arr) {
 			core->enqueue (ch);
+			//qDebug () << QString ("%1").arg (ch, 2, 16, QChar ('0'));
 		}
 		currentSerialPort->pause = false;
 	});

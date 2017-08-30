@@ -35,6 +35,7 @@ typedef QPushButton* Button;
 class Painter :public QWidget {
 	Q_OBJECT
 public:
+	int count = 0;
 	QImage img;
 	Painter (QWidget * parent = nullptr) :QWidget (parent) {};
 	public slots:
