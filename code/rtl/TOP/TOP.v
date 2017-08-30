@@ -22,7 +22,7 @@ module TOP (
      |                     Clocks                     |
      -------------------------------------------------*/
     parameter SYS_CLK_FREQ = 100_000_000;
-    parameter BAUD_RATE = 115200;
+    parameter BAUD_RATE = 921600;
     
     wire clk_uart, clk_100kHz, clk_25MHz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
