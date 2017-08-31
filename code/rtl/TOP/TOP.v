@@ -22,7 +22,7 @@ module TOP (
      |                     Clocks                     |
      -------------------------------------------------*/
     parameter SYS_CLK_FREQ = 100_000_000;
-    parameter BAUD_RATE = 115200;
+    parameter BAUD_RATE = 921600;
     
     wire clk_uart, clk_100kHz, clk_25MHz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
@@ -112,4 +112,9 @@ module TOP (
         else if (tx_start) begin if (!tx_finish) tx_start <= 1'b0; end
         else if (!initialized) begin tx_start <= new_init_data_reg[1] & ~new_init_data_reg[2]; tx_data <= init_data; end
         else begin tx_start <= new_frame_data_reg[1] & ~new_frame_data_reg[2]; tx_data <= frame_data; end
+        
+    /*-------------------------------------------------
+     |                  Debug LEDs                    |
+     -------------------------------------------------*/
+    assign led[0] = initialized;
 endmodule

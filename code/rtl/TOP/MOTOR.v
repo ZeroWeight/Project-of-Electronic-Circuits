@@ -15,9 +15,9 @@ module MOTOR (
         else if (clk_cnt) begin
             clk_cnt <= clk_cnt - 1'd1;
             case (direction)
-            2'b11: begin en <= 2'b10; pwm <= clk_cnt < pwm_cnt; end
-            2'b00: begin en <= 2'b01; pwm <= clk_cnt < pwm_cnt; end
-            default: begin en <= 2'b00; pwm <= 1'b0; end
+            2'b11: begin en <= 2'b10; pwm <= clk_cnt < pwm_cnt; end // forward
+            2'b00: begin en <= 2'b01; pwm <= clk_cnt < pwm_cnt; end // backward
+            default: begin en <= 2'b00; pwm <= 1'b0; end // halt
             endcase
         end else clk_cnt <= max_cnt;
 endmodule
