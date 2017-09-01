@@ -16,7 +16,9 @@ module TOP (
     input [7:0] fifo_data, // fifo data
     output rclk, // fifo read clock
     output rrst, // fifo read reset
-    output [15:0] led
+    output [15:0] led,
+    output [3:0] AN,
+    output [0:7] Y
 );
     /*-------------------------------------------------
      |                     Clocks                     |
@@ -24,13 +26,15 @@ module TOP (
     parameter SYS_CLK_FREQ = 100_000_000;
     parameter BAUD_RATE = 921600;
     
-    wire clk_uart, clk_100kHz, clk_25MHz;
+    wire clk_uart, clk_100kHz, clk_25MHz, clk_250Hz, clk_2Hz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
     CLK_GEN #(SYS_CLK_FREQ, 100_000) clk_gen_100kHz(sys_clk, rst_n, clk_100kHz);
     CLK_GEN #(SYS_CLK_FREQ, 25_000_000) clk_gen_25MHz(sys_clk, rst_n, clk_25MHz);
+    CLK_GEN #(SYS_CLK_FREQ, 250) clk_gen_250Hz(sys_clk, rst_n, clk_250Hz);
+    CLK_GEN #(SYS_CLK_FREQ, 2) clk_gen_2Hz(sys_clk, rst_n, clk_2Hz);
     
     /*-------------------------------------------------
-     |                    Servo                       |
+     |                     Servo                      |
      -------------------------------------------------*/
     localparam [7:0] min_angle = 8'd195;
     localparam [7:0] max_angle = 8'd255;
@@ -39,7 +43,7 @@ module TOP (
     SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
     
     /*-------------------------------------------------
-     |                    Motor                       |
+     |                     Motor                      |
      -------------------------------------------------*/
     reg[1:0] direction = 2'b01;
     MOTOR motor(clk_100kHz, rst_n, direction, motor_en, motor_pwm);
@@ -117,4 +121,20 @@ module TOP (
      |                  Debug LEDs                    |
      -------------------------------------------------*/
     assign led[0] = initialized;
+    
+    /*-------------------------------------------------
+     |                   Nixietube                    |
+     -------------------------------------------------*/
+    reg[31:0] display_data;
+    DISPLAY display(clk_250Hz, rst_n, display_data, AN, Y);
+    always @(posedge clk_2Hz or negedge rst_n)
+        if (!rst_n) display_data <= 32'hFFFFFFFF;
+        else case (display_data)
+        32'h9161E3E3: display_data <= 32'h61E3E303;
+        32'h61E3E303: display_data <= 32'hE3E303FF;
+        32'hE3E303FF: display_data <= 32'hE303FF91;
+        32'hE303FF91: display_data <= 32'h03FF9161;
+        32'h03FF9161: display_data <= 32'hFF9161E3;
+        default: display_data <= 32'h9161E3E3;
+        endcase
 endmodule
