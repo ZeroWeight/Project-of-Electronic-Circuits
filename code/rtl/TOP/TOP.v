@@ -36,9 +36,9 @@ module TOP (
     /*-------------------------------------------------
      |                     Servo                      |
      -------------------------------------------------*/
-    localparam [7:0] min_angle = 8'd195;
-    localparam [7:0] max_angle = 8'd255;
-    localparam [7:0] default_angle = 8'd225;
+    localparam [7:0] min_angle = 8'd150;
+    localparam [7:0] max_angle = 8'd250;
+    localparam [7:0] default_angle = 8'd200;
     reg[7:0] angle = default_angle;
     SERVO servo(clk_100kHz, rst_n, angle, servo_pwm);
     
@@ -92,7 +92,8 @@ module TOP (
             case (rx_data[7:5]) // motor
             3'b011: direction <= 2'b11; // forward
             3'b110: direction <= 2'b00; // backward
-            default: direction <= 2'b01; // halt
+            3'b101: direction <= 2'b01; // halt
+            default: ;
             endcase
             case (rx_data[4:2]) // servo
             3'b011: if (angle < max_angle) angle <= angle + 1'd1; // turn left
