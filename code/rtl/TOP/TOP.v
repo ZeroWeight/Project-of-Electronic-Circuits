@@ -6,6 +6,8 @@ module TOP (
     output servo_pwm,
     output [1:0] motor_en,
     output motor_pwm,
+    output trig,
+    input echo,
     input rx_pin,
     output tx_pin,
     output scl, // sccb clock
@@ -26,9 +28,10 @@ module TOP (
     parameter SYS_CLK_FREQ = 100_000_000;
     parameter BAUD_RATE = 921600;
     
-    wire clk_uart, clk_100kHz, clk_24MHz, clk_250Hz, clk_2Hz;
+    wire clk_uart, clk_100kHz, clk_1MHz, clk_24MHz, clk_250Hz, clk_2Hz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
     CLK_GEN #(SYS_CLK_FREQ, 100_000) clk_gen_100kHz(sys_clk, rst_n, clk_100kHz);
+    CLK_GEN #(SYS_CLK_FREQ, 1_000_000) clk_gen_1MHz(sys_clk, rst_n, clk_1MHz);
     CLK_GEN #(SYS_CLK_FREQ, 24_000_000) clk_gen_24MHz(sys_clk, rst_n, clk_24MHz);
     CLK_GEN #(SYS_CLK_FREQ, 250) clk_gen_250Hz(sys_clk, rst_n, clk_250Hz);
     CLK_GEN #(SYS_CLK_FREQ, 2) clk_gen_2Hz(sys_clk, rst_n, clk_2Hz);
@@ -47,6 +50,12 @@ module TOP (
      -------------------------------------------------*/
     reg[1:0] direction = 2'b01;
     MOTOR motor(clk_100kHz, rst_n, direction, motor_en, motor_pwm);
+    
+    /*-------------------------------------------------
+     |                   ULTRASONIC                   |
+     -------------------------------------------------*/
+    reg[11:0] distance;
+    ULTRASONIC ultrasonic(clk_1MHz, rst_n, trig, echo, distance);
     
     /*-------------------------------------------------
      |                      UART                      |
@@ -121,6 +130,18 @@ module TOP (
      |                  Debug LEDs                    |
      -------------------------------------------------*/
     assign led[0] = initialized;
+    assign led[15:6] = {
+        distance < 12'd1000,
+        distance < 12'd900,
+        distance < 12'd800,
+        distance < 12'd700,
+        distance < 12'd600,
+        distance < 12'd500,
+        distance < 12'd400,
+        distance < 12'd300,
+        distance < 12'd200,
+        distance < 12'd100
+    };
     
     /*-------------------------------------------------
      |                   Nixietube                    |
