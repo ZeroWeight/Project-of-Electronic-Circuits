@@ -9,7 +9,7 @@ module MOTOR (
 );
     localparam [9:0] max_cnt = 10'd1000;
     reg[9:0] clk_cnt = max_cnt;
-    reg[9:0] pwm_cnt = 10'd900;
+    reg[9:0] pwm_cnt = 10'd500;
     always @(posedge clk_100kHz or negedge rst_n)
         if (!rst_n) begin
             clk_cnt <= max_cnt;

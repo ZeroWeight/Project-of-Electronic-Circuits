@@ -26,10 +26,10 @@ module TOP (
     parameter SYS_CLK_FREQ = 100_000_000;
     parameter BAUD_RATE = 921600;
     
-    wire clk_uart, clk_100kHz, clk_25MHz, clk_250Hz, clk_2Hz;
+    wire clk_uart, clk_100kHz, clk_24MHz, clk_250Hz, clk_2Hz;
     CLK_GEN #(SYS_CLK_FREQ, BAUD_RATE) clk_gen_uart(sys_clk, rst_n, clk_uart);
     CLK_GEN #(SYS_CLK_FREQ, 100_000) clk_gen_100kHz(sys_clk, rst_n, clk_100kHz);
-    CLK_GEN #(SYS_CLK_FREQ, 25_000_000) clk_gen_25MHz(sys_clk, rst_n, clk_25MHz);
+    CLK_GEN #(SYS_CLK_FREQ, 24_000_000) clk_gen_24MHz(sys_clk, rst_n, clk_24MHz);
     CLK_GEN #(SYS_CLK_FREQ, 250) clk_gen_250Hz(sys_clk, rst_n, clk_250Hz);
     CLK_GEN #(SYS_CLK_FREQ, 2) clk_gen_2Hz(sys_clk, rst_n, clk_2Hz);
     
@@ -75,8 +75,8 @@ module TOP (
     wire frame_read;
     wire new_frame_data;
     wire[7:0] frame_data;
-    OV_STORE ov_s(clk_25MHz, rst_n, initialized, wen, wrst, vsync, new_frame, frame_read);
-    OV_READ ov_r(clk_25MHz, rst_n, initialized, fifo_data, rclk, rrst, new_frame, frame_read, new_frame_data, frame_data);
+    OV_STORE ov_s(clk_24MHz, rst_n, initialized, wen, wrst, vsync, new_frame, frame_read);
+    OV_READ ov_r(clk_24MHz, rst_n, initialized, fifo_data, rclk, rrst, new_frame, frame_read, new_frame_data, frame_data);
     
     /*-------------------------------------------------
      |                   Top - RX                     |
@@ -92,8 +92,7 @@ module TOP (
             case (rx_data[7:5]) // motor
             3'b011: direction <= 2'b11; // forward
             3'b110: direction <= 2'b00; // backward
-            3'b101: direction <= 2'b01; // halt
-            default: ;
+            default: direction <= 2'b01; // halt
             endcase
             case (rx_data[4:2]) // servo
             3'b011: if (angle < max_angle) angle <= angle + 1'd1; // turn left
