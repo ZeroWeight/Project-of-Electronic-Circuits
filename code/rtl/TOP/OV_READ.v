@@ -1,7 +1,7 @@
 `timescale 1us / 1us
 
 module OV_READ (
-    input clk_25MHz,
+    input clk_24MHz,
     input rst_n,
     input initialized,
     input [7:0] fifo_data,
@@ -17,7 +17,7 @@ module OV_READ (
     localparam [17:0] frame_bytes = 320 * 240 * 2;
     reg[17:0] bytes_remaining = frame_bytes;
     reg[3:0] state = 4'h0;
-    always @(posedge clk_25MHz or negedge rst_n)
+    always @(posedge clk_24MHz or negedge rst_n)
         if (!rst_n) begin 
             rclk <= 1'b1; rrst <= 1'b1;
             frame_read = 1'b1;
