@@ -1,7 +1,6 @@
 #include "userinterface.h"
 #include <QtWidgets/QApplication>
 #include <QDebug>
-#include <qdebug.h>
 int main (int argc, char *argv[]) {
 	QApplication a (argc, argv);
 	QFile styleSheet ("UIstyle.qss");

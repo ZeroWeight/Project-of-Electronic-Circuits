@@ -48,7 +48,7 @@ class Writer :public QThread, public QQueue<unsigned char> {
 private:
 	QImage img;
 	int _size;
-	unsigned char ans[240][320][3] = { 0 };
+	unsigned char ans[320][240][3] = { 0 };
 	QFile* file;
 	QTextStream* stream;
 protected:

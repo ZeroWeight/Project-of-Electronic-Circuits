@@ -5,16 +5,16 @@ UserInterface::UserInterface (QWidget *parent)
 	byte = 0x00;//11 00 00 00
 	ui.setupUi (this);
 	size = QApplication::desktop ()->height () / 500;
-	this->setFixedHeight (460 * size);
-	this->setFixedWidth (320 * size);
+	this->setFixedHeight (320 * size);
+	this->setFixedWidth (460 * size);
 	this->setObjectName ("MainWindow");
 	core = new Bus (this, size);
 	paint_area = new Painter (this);
-	paint_area->setGeometry (0, 0, 320 * size, 240 * size);
+	paint_area->setGeometry (0, 0, 240 * size, 320 * size);
 	paint_area->show ();
 	for (int i = 0; i < 12; ++i) {
 		Control_array[i] = new QPushButton (this);
-		Control_array[i]->setGeometry (20 * size + (i & 3) * 75 * size, 245 * size + (i >> 2) * 45 * size, 50 * size, 40 * size);
+		Control_array[i]->setGeometry (260 * size + (i >> 2) * 45 * size, 20 * size + (i & 3) * 75 * size, 40 * size, 50 * size);
 		Control_array[i]->setObjectName (QString ("button_") + QString::number (i));
 		connect (Control_array[i], &QPushButton::pressed, [=] {
 			switch (i) {
@@ -42,6 +42,9 @@ UserInterface::UserInterface (QWidget *parent)
 			byte = 0x00;
 		});
 	}
+	Control_array[3]->setGeometry (260 * size + (12 >> 2) * 45 * size, 20 * size + (12 & 3) * 75 * size, 40 * size, 50 * size);
+	Control_array[7]->setGeometry (260 * size + (13 >> 2) * 45 * size, 20 * size + (13 & 3) * 75 * size, 40 * size, 50 * size);
+	Control_array[11]->setGeometry (260 * size + (14 >> 2) * 45 * size, 20 * size + (14 & 3) * 75 * size, 40 * size, 50 * size);
 	//SerialPort Interface
 	currentSerialPort = new SerialPort (this);
 	sender = static_cast<QSerialPort*> (currentSerialPort);
@@ -52,9 +55,10 @@ UserInterface::UserInterface (QWidget *parent)
 	timer->setInterval (10);
 
 	settingCOM->setObjectName ("settingCOM");
-	settingCOM->setGeometry (20 * size, 390 * size, 280 * size, 20 * size);
+	settingCOM->setGeometry (260 * size, 240 * size, 180 * size, 20 * size);
 	uart_on_off->setObjectName ("on_off");
-	uart_on_off->setGeometry (20 * size, 430 * size, 280 * size, 20 * size);
+	//settingCOM->set
+	uart_on_off->setGeometry (260 * size, 270 * size, 180 * size, 20 * size);
 	uart_on_off->setText (tr ("Turn On"));
 
 	settingCOM->clear ();

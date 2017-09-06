@@ -51,7 +51,8 @@ $RECYCLE.BIN/
 # Precompiled Headers
 *.gch
 *.pch
-
+*.user
+*.vs
 # Libraries
 *.lib
 *.a

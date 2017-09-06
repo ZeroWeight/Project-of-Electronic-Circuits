@@ -43,11 +43,11 @@ void Writer::run () {
 		for (int i = 0; i < 240; ++i)for (int j = 0; j < 320; ++j) {
 			unsigned ch1 = this->dequeue ();
 			unsigned ch2 = this->dequeue ();
-			ans[i][j][0] = unsigned char (ch1 & 0xF8);
-			ans[i][j][1] = unsigned char ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
-			ans[i][j][2] = unsigned char (ch2 << 3);
+			ans[j][i][0] = unsigned char (ch1 & 0xF8);
+			ans[j][i][1] = unsigned char ((ch1 << 5) | (ch2 >> 3)) & 0xFC;
+			ans[j][i][2] = unsigned char (ch2 << 3);
 		}
-		img = QImage ((const uchar*)ans, 320, 240, QImage::Format_RGB888);
+		img = QImage ((const uchar*)ans, 240, 320, QImage::Format_RGB888);
 		emit Image (img);
 	}
 	for (unsigned char hex : *this) {
