@@ -1,7 +1,7 @@
 `timescale 1us / 1us
 
 module MOTOR (
-    input clk_100kHz,
+    input clk_1MHz,
     input rst_n,
     input [1:0] direction,
     output reg[1:0] en,
@@ -10,7 +10,7 @@ module MOTOR (
     localparam [9:0] max_cnt = 10'd1000;
     reg[9:0] clk_cnt = max_cnt;
     reg[9:0] pwm_cnt = 10'd500;
-    always @(posedge clk_100kHz or negedge rst_n)
+    always @(posedge clk_1MHz or negedge rst_n)
         if (!rst_n) begin
             clk_cnt <= max_cnt;
             en <= 2'b00; pwm <= 1'b0;

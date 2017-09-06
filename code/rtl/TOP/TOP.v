@@ -49,12 +49,12 @@ module TOP (
      |                     Motor                      |
      -------------------------------------------------*/
     reg[1:0] direction = 2'b01;
-    MOTOR motor(clk_100kHz, rst_n, direction, motor_en, motor_pwm);
+    MOTOR motor(clk_1MHz, rst_n, direction, motor_en, motor_pwm);
     
     /*-------------------------------------------------
      |                   ULTRASONIC                   |
      -------------------------------------------------*/
-    reg[11:0] distance;
+    reg[11:0] distance = 12'd0;
     ULTRASONIC ultrasonic(clk_1MHz, rst_n, trig, echo, distance);
     
     /*-------------------------------------------------
@@ -96,6 +96,7 @@ module TOP (
         else rx_finish_reg <= {rx_finish, rx_finish_reg[0:1]};
     always @(posedge sys_clk or negedge rst_n)
         if (!rst_n) angle <= default_angle;
+        // else if (rx_error) direction <= 2'b01;
         else if (rx_finish_reg[1] & ~rx_finish_reg[2]) // posedge
         if ((rx_data & 8'h03) == 8'h00) begin
             case (rx_data[7:5]) // motor
