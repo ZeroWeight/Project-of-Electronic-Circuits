@@ -11,7 +11,8 @@ $RECYCLE.BIN/
 *.log
 *.aux
 *.vscodeLog
-
+*.MOV
+*.mp4
 # Object files
 *.o
 *.ko
