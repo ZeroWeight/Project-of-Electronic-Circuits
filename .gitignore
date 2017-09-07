@@ -22,6 +22,7 @@ $RECYCLE.BIN/
 *.PcbDocPreview
 *.LOG
 *.pic
+*.MOV
 *.Zip
 *.opendb
 *.PrjPcbStructure
