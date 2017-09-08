@@ -13,6 +13,7 @@ $RECYCLE.BIN/
 *.vscodeLog
 *.MOV
 *.mp4
+!final.mp4
 # Object files
 *.o
 *.ko
