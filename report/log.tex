@@ -1,0 +1,150 @@
+\documentclass[a4paper]{paper}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{hyperref}
+\title{
+    \begin{large}电子技术课程设计\end{large}\\
+    基于受控无人车的场地探测和3D重建系统\\
+    项目详细日志
+}
+\author{
+    张蔚桐\ 2015011493\ 自55\\
+    陈　崴\ 2015011481\ 自55
+}
+\begin {document}
+\maketitle
+
+以下是整个项目的开发日志，代码开源托管在\url{https://github.com/ZeroWeight/Project-of-Electronic-Circuits}上，这里是开发过程中的commit记录。
+其中各字符意义为\begin{itemize}\item [A]dd:增加文件/功能 \item[U]pdate：更新文件/功能 \item [D]elete:
+删除文件/功能 \item [R]elease:发布功能进入稳定模式 \end{itemize}这里的项目日志删除了部分文件系统管理
+日志，全部的提交记录请参阅\url{https://github.com/ZeroWeight/Project-of-Electronic-Circuits/commits/master}\\ 
+陈崴: [U] final commit @ Wed Sep 6 12:54:27\\ 
+张蔚桐: [D] rm the useless mode @ Wed Sep 6 11:15:22\\ 
+张蔚桐: Merge branch 'master' of github.com:ZeroWeight/Project-of-Electronic-Circuits @ Wed Sep 6 09:53:10\\ 
+张蔚桐: [D] rm the labview file @ Wed Sep 6 09:09:28\\ 
+陈崴: [A] ultrasonic ranging module @ Tue Sep 5 16:04:07\\ 
+陈崴: Merge branch 'local' @ Tue Sep 5 14:55:59\\ 
+陈崴: [U] not essential changes @ Tue Sep 5 14:55:41\\ 
+陈崴: [U] servo and motor pwm @ Mon Sep 4 15:34:16\\ 
+线上修改: Update README.md @ Sun Sep 3 19:34:21\\ 
+线上修改: Update README.md @ Sun Sep 3 19:33:34\\ 
+张蔚桐: [U] update Readme @ Fri Sep 1 08:40:03\\  
+张蔚桐: [U] myRIO project resources @ Thu Aug 31 19:11:54\\ 
+陈崴: [A] 7-segment nixietube display module @ Thu Aug 31 14:39:27\\  
+张蔚桐: [U] now we can watch connan @ Wed Aug 30 12:51:53\\ 
+陈崴: Ha. @ Wed Aug 30 12:39:16\\ 
+陈崴: [D] debug @ Tue Aug 29 22:59:25\\ 
+张蔚桐: [U] update ignore @ Tue Aug 29 00:25:02\\ 
+张蔚桐: [U] Gyo finished @ Tue Aug 29 00:21:06\\ 
+张蔚桐: [U] 1st day final host machine @ Mon Aug 28 16:51:38\\ 
+张蔚桐: [U] release the host machine @ Mon Aug 28 15:26:18\\ 
+张蔚桐: [A] add in myRIO ctrler @ Mon Aug 28 11:52:43\\ 
+陈崴: [U] preview ppt @ Mon Aug 28 10:51:26\\ 
+陈崴: [A] motor module @ Mon Aug 28 10:49:39\\ 
+张蔚桐: [U] renew the host machine coder @ Mon Aug 28 09:25:54\\ 
+张蔚桐: [U] recomplie the pdf file @ Sun Aug 27 12:36:37\\ 
+陈崴: [U] preview ppt @ Sun Aug 27 11:41:34\\ 
+陈崴: [U] fix typos @ Sun Aug 27 11:22:09\\  
+陈崴: [A] preview ppt @ Sun Aug 27 11:06:43\\  
+张蔚桐: [U] refine the preview report @ Sun Aug 27 10:47:07\\ 
+线上修改: Update README.md @ Sun Aug 27 10:40:05\\ 
+张蔚桐: [U] finish the preview report @ Sun Aug 27 10:37:57\\ 
+张蔚桐: [U] typos and syntax errors fixed in preview report @ Fri Aug 25 18:11:54\\ 
+陈崴: [U] report - fpga block @ Fri Aug 25 17:16:48\\ 
+陈崴: [U] fpga block @ Fri Aug 25 17:15:56\\ 
+陈崴: [U] gitignore @ Fri Aug 25 16:12:16\\  
+陈崴: [U] report @ Fri Aug 25 16:01:43\\ 
+张蔚桐: [U] webench simu finish @ Fri Aug 25 15:53:36\\ 
+陈崴: Merge branch 'master' into local @ Fri Aug 25 14:55:42\\ 
+陈崴: [A] FPGA block design @ Fri Aug 25 14:55:29\\ 
+陈崴: [U] code indention @ Fri Aug 25 14:53:35\\ 
+张蔚桐: [U] README“ @ Fri Aug 25 11:58:08\\ 
+张蔚桐: [U] finish report 1 2 @ Fri Aug 25 11:56:54\\ 
+张蔚桐: [U] report finish part 1 and 2 @ Fri Aug 25 11:45:14\\ 
+线上修改: Update README.md @ Fri Aug 25 11:33:52\\ 
+张蔚桐: [U] release PCB @ Thu Aug 24 09:17:36\\ 
+陈崴: [U] try baudrate 115200 @ Wed Aug 23 22:35:12\\ 
+线上修改: [U] Fin some awkward format errors on markdown @ Wed Aug 23 20:59:47\\ 
+线上修改: Update README.md @ Wed Aug 23 20:56:35\\ 
+线上修改: Update README.md @ Wed Aug 23 20:55:10\\ 
+张蔚桐: [U] finish PCB @ Wed Aug 23 20:49:49\\ 
+张蔚桐: [version update] static complie with Qt 5.9 @ Sun Aug 13 18:30:50\\ 
+线上修改: Delete DesignRuleCheck.bak @ Fri Aug 11 10:39:47\\ 
+线上修改: Delete Design Rule Check - PCB1.html @ Fri Aug 11 10:39:33\\ 
+张蔚桐: [D] rm @ Thu Aug 10 09:27:49\\ 
+张蔚桐: [U] rm the useless change @ Thu Aug 10 09:26:55\\ 
+张蔚桐: [D] remove uesless PCB component @ Thu Aug 10 09:20:24\\ 
+张蔚桐: [U] fix bugs of baudrate @ Thu Aug 10 09:15:10\\ 
+线上修改: [U] servo @ Tue Aug 8 23:07:08\\ 
+陈崴: [U] servo @ Tue Aug 8 22:59:28\\ 
+陈崴: [A] servo @ Tue Aug 8 22:58:05\\ 
+线上修改: [U] protocol - servo @ Tue Aug 8 22:03:54\\ 
+张蔚桐: [A] add on protocol @ Tue Aug 8 10:55:48\\ 
+张蔚桐: [A] pushbutton remote control finished @ Tue Aug 8 10:45:58\\ 
+张蔚桐: [A] keyboard remote control finished @ Tue Aug 8 10:21:06\\ 
+张蔚桐: [A] finish the PCB @ Mon Aug 7 21:00:14\\ 
+张蔚桐: [U] update pins for OV @ Sun Aug 6 20:49:45\\ 
+张蔚桐: [A] simply finish the PCB design @ Sun Aug 6 18:43:45\\ 
+张蔚桐: [U] NOTE the host machine is release @ Sat Aug 5 11:59:01\\ 
+张蔚桐: [U][R] Release the host machine - NOTICE     - You can run it in release mode     - Err ratio: approx 20%     - 1fps, but delay may exist     - do not care the free time of the seiral port     - NOTICE the command in /utility.cpp, LINE 82 @ Sat Aug 5 11:53:33\\ 
+张蔚桐: [U]IMPORTANT UPDATE: fix bugs of host @ Sat Aug 5 11:27:21\\ 
+张蔚桐: [U] temp commit with Graphics all white @ Sat Aug 5 11:13:19\\ 
+张蔚桐: [U] temp commit with Graphics to fix @ Sat Aug 5 10:58:12\\ 
+张蔚桐: [U] Temp update with bugs to fix @ Sat Aug 5 07:47:19\\ 
+线上修改: [U] ov7670 @ Fri Aug 4 23:37:03\\ 
+张蔚桐: [U] update host computer     - Greatly rely on performance of the computer     - Err ratio using demo: 1%     - Baud Rate: 1382400     - Without openGL or QImage @ Fri Aug 4 21:58:20\\ 
+张蔚桐: [U] refine the structure of serial port @ Fri Aug 4 21:40:33\\ 
+张蔚桐: [U] IMPORTANT UPDATE     - No data lost     - TODO: readALL()     - TODO: update the GL (or use QImage instead) @ Fri Aug 4 19:58:34\\ 
+张蔚桐: [U] a temp commit with lots of bugs to be fixed @ Fri Aug 4 18:44:43\\ 
+张蔚桐: [D] remove the baudrate controller @ Fri Aug 4 17:30:32\\ 
+陈崴: [U] ov7670 @ Fri Aug 4 14:32:41\\ 
+陈崴: [U] ov7670 works well @ Fri Aug 4 14:25:36\\ 
+线上修改: [U] fix @ Fri Aug 4 12:56:41\\  
+陈崴: Merge branch 'local' @ Fri Aug 4 12:48:31\\ 
+陈崴: [U] ov7670 generally works: 修改了一下初始化配置，不一定比原来好，可以进一步测试。现在初始化返回值共517字节。初始化后的几帧可能不太稳定，直接舍弃。 读取图像速度改为100us每字节，需在上位机方面优化。图像可能出现某块状或条状区域数据异常，表现为彩块或彩条。 @ Fri Aug 4 12:30:52\\ 
+张蔚桐: [U] update the BOM @ Thu Aug 3 22:03:29\\ 
+张蔚桐: [A] resource of PCB all finished @ Thu Aug 3 18:16:16\\ 
+陈崴: Merge branch 'master' into local @ Thu Aug 3 18:13:04\\ 
+张蔚桐: [bug fixed]     - fix the bug of exit     - refine the method to write to files     - can accept 10ms/640B input     - may rely on the performance of computer     - NOT stable @ Thu Aug 3 16:59:16\\ 
+张蔚桐: [U] output to file, BUG: cant exit normally @ Thu Aug 3 12:39:47\\ 
+陈崴: [D] x64/Release/UserInterface.exe @ Thu Aug 3 09:41:27\\ 
+陈崴: [U] read frame data (simply tested) 	- 摄像头只可初始化一次，若初始化中断或错误或重新初始化，则需要重新上电。所以注释了OV\_INIT.v LINE51。 	- （未测试）目前只处理了QVGA的一帧，即只使用FIFO的一半空间。 	- 目前发给上位机的数据中，前328B为初始化返回值，若初始化成功，则第7字节为0x73，第11字节为0x76，第327字节为0x0D，第328字节为0x0A，其余字节为0x00。 	- （未测试）从第329字节起为图像数据，前320×240×2字节为RGB565数据，最后2字节为0x0D、0x0A。似乎数据仍有错误，需要进一步测试。 	- 目前发送图像数据的逻辑为：当FIFO中写满了一帧QVGA数据，OV\_READ模块按字节传给顶层，两字节间隔10us；顶层每接收到一个字节，立即以波特率115200发给上位机。 @ Thu Aug 3 00:32:17\\  
+陈崴: [U] ov7670 initialization @ Wed Aug 2 21:54:40\\ 
+张蔚桐: [A] Bill Of Materials @ Wed Aug 2 15:45:23\\  
+线上修改: [U] low level indicates success @ Wed Aug 2 15:04:56\\ 
+张蔚桐: [U] clear queue when establishing the connect @ Wed Aug 2 09:14:29\\ 
+张蔚桐: [U] upper demo @ Wed Aug 2 09:12:25\\  
+张蔚桐: [A] release project to .exe @ Tue Aug 1 20:15:35\\ 
+陈崴: [U] fix LINE144 @ Tue Aug 1 20:00:55\\ 
+张蔚桐: [U] bug fixed and finish the verify of the image @ Tue Aug 1 19:51:46\\ 
+线上修改: [U] fix LINE144 @ Tue Aug 1 19:49:58\\ 
+张蔚桐: [U] Finish Serial Port connection @ Tue Aug 1 19:08:30\\ 
+陈崴: [A] rtl top (untested) 	整合了摄像头初始化、数据读取和串口通信。 	帧数据按每像素先高字节后低字节的顺序发送至上位机，每帧以0x0D 0x0A结束，共320 × 240 × 2 + 2 = 153602字节。 @ Tue Aug 1 18:28:01\\ 
+陈崴: [U] ov7670 initial configuration 	QVGA RGB565 @ Tue Aug 1 18:26:17\\ 
+陈崴: [A] read frame data (untested) @ Tue Aug 1 15:09:45\\ 
+张蔚桐: [U] preview report section 2 finished @ Tue Aug 1 11:00:10\\ 
+张蔚桐: [D] remove useless project in circuit/ @ Tue Aug 1 09:00:58\\ 
+线上修改:  [A] sccb interface (untested) @ Mon Jul 31 23:16:26\\ 
+陈崴: [U] ov7670 initial configuration @ Mon Jul 31 22:30:30\\ 
+陈崴: [A] sccb interface (untested) @ Mon Jul 31 21:32:49\\ 
+线上修改: [A] uart modules @ Mon Jul 31 20:08:05\\ 
+张蔚桐: [D] del some unuseful qss file @ Mon Jul 31 19:47:15\\ 
+张蔚桐: [R] UI basically finished @ Mon Jul 31 18:42:03\\ 
+陈崴: [U] bluetooth communication @ Mon Jul 31 16:32:17\\ 
+陈崴: [A] uart modules 	Verilog串口模块，波特率可调，8数据位，无校验位，1停止位。 	高波特率时有误码现象，需改进。 @ Mon Jul 31 16:14:46\\ 
+张蔚桐: [A] user interface @ Mon Jul 31 11:56:44\\ 
+张蔚桐: [F] 3v3 sch finished @ Sun Jul 30 19:50:00\\ 
+张蔚桐: [A] PCB lib for AD add in, @ Sun Jul 30 19:08:30\\ 
+张蔚桐: [U] report tasks @ Sun Jul 30 11:25:30\\ 
+张蔚桐: [A] blank task table finished @ Sun Jul 30 11:16:58\\ 
+线上修改: Update README.md @ Sun Jul 30 11:09:12\\ 
+张蔚桐: [A] Readme @ Sun Jul 30 11:03:05\\ 
+张蔚桐: [A] README @ Sun Jul 30 11:01:59\\ 
+张蔚桐: [A] CHN datasheet and SCCB code @ Sat Jul 29 15:59:44\\ 
+张蔚桐: [A] OV datasheet and summary @ Sat Jul 29 12:05:27\\ 
+张蔚桐: Initial commit @ Sun Jul 9 09:31:41\\ 
+\end{document}
