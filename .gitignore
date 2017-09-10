@@ -1,3 +1,48 @@
+*.aux
+*.d
+*.dat
+*.db
+*.drc
+*.elf
+*.exp
+*.filters
+*.gch
+*.gz
+*.html
+*.ilk
+*.ilk
+*.ipch
+*.ko
+*.lastbuildstate
+*.log
+*.map
+*.MOV
+*.mp4
+*.o
+*.obj
+*.opendb
+*.OutJob
+*.PcbDocPreview
+*.pch
+*.pdb
+*.pic
+*.png
+*.PrjPcbStructure
+*.REPPreview
+*.SchDoc
+*.SchDocPreview
+*.stash
+*.suo
+*.tlog
+*.txt
+*.user
+*.vcxproj
+*.vs
+*.vscodeLog
+*.zip
+
+*Makefile*
+
 # OS generated files
 $RECYCLE.BIN/
 .DS_Store
@@ -6,56 +51,6 @@ $RECYCLE.BIN/
 .Spotlight-V100
 .Trashes
 
-# Prerequisites
-*.d
-*.log
-*.aux
-*.vscodeLog
-*.MOV
-*.mp4
-!final.mp4
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-*.gz
-*.REPPreview
-*.PcbDocPreview
-*.LOG
-*.pic
-*.MOV
-*.Zip
-*.opendb
-*.PrjPcbStructure
-*.suo
-*.pdb
-*.Dat
-*.OutJob
-*.tlog
-*.stash
-*Makefile*
-*.lastbuildstate
-*.filters
-*.vcxproj
-*.ilk
-*.db
-*.SchDoc
-*.drc
-*.html
-*.SchDocPreview
-*.txt
-# Linker output
-*.ilk
-*.map
-*.exp
-*.ipch
-*.png
-# Precompiled Headers
-*.gch
-*.pch
-*.user
-*.vs
 # Libraries
 *.lib
 *.a
@@ -95,3 +90,7 @@ dkms.conf
 *.fdb_latexmk
 *.fls
 *.toc
+
+# Exceptions
+!CONF.hex
+!final.mp4

@@ -28,7 +28,7 @@ module TOP_DEMO (
     initial $readmemh("CONF.hex", conf); // read config file
     
     // camera initialization
-    `include "SCCB.vh"
+    `include "SCCB.v"
     reg success;
     reg[7:0] addr;
     initial begin
