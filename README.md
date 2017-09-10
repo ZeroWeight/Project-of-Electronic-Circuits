@@ -41,10 +41,10 @@
         - [x] 传感器/执行机构接口电路图 *ZeroWeight@20170827*
         - [x] 基于Webench的电源电路仿真 *ZeroWeight@20170825*
     - [x] 选题展示PPT *Archer@20170827*
-    - [ ] 总结报告
-        - [ ] 课题开发与调试中出现的问题分析
-        - [ ] 创新点（如有）
+    - [x] 总结报告 *ZeroWeight@20170910*
+        - [x] 课题开发与调试中出现的问题分析 *Archer&Zeroweight@20170909*
+        - [x] 创新点（如有）*Archer&ZeroWeight@20170910*
         - [x] 附完整源码*ZeroWeight@20170909*
         - [x] 工作日志*ZeroWeight@20170909*
-        - [ ] 作品的视频
+        - [x] 作品的视频 *Archer@20170908*
     - [x] 最终展示PPT *ZeroWeight@20170907*
