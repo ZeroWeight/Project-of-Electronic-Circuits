@@ -1,0 +1,59 @@
+﻿*{
+font-size:20px;
+color:white;
+font-family:"TimesNewRoman";
+}
+QMainWindow,QDialog{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #1B2534, stop: 0.4 #010101,
+stop: 0.5 #000101, stop: 1.0 #1F2B3C);
+}
+QWidget{
+background:#121922;
+}
+QLabel{
+background:transparent;
+}
+QPushButton{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #5B5F5F, stop: 0.5 #0C2436,
+stop: 1.0 #27405A);
+border-style: outset;
+border-width: 1px;
+border-radius: 5px;
+border-color: #11223F;
+padding: 1px;
+}
+QPushButton::hover{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #758385, stop: 0.5 #122C39,
+stop: 1.0 #0E7788);
+border-color: #11505C;
+}
+QPushButton::pressed{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #969B9C, stop: 0.5 #16354B,
+stop: 1.0 #244F76);
+border-color: #11505C;
+}
+QPushButton::disabled{
+background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #282B2C, stop: 0.5 #09121A,
+stop: 1.0 #111D29);
+border-color: #0A1320;
+color:#6A6864;
+}
+QPushButton#button_0{qproperty-text: "F01 L01";}
+QPushButton#button_1{qproperty-text: "F01 00";}
+QPushButton#button_2{qproperty-text: "F01 R10";}
+QPushButton#button_3{qproperty-text: "S11 00";}
+
+QPushButton#button_4{qproperty-text: "00 L01";}
+QPushButton#button_5{qproperty-text: "00 00";}
+QPushButton#button_6{qproperty-text: "00 R10";}
+QPushButton#button_7{qproperty-text: "S11 S11";}
+
+QPushButton#button_8{qproperty-text: "B10 L01";}
+QPushButton#button_9{qproperty-text: "B10 00";}
+QPushButton#button_10{qproperty-text: "B10 R10";}
+QPushButton#button_11{qproperty-text: "00 S11";}
